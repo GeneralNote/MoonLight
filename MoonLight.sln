@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2042
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MoonLight", "MoonLight.vcxproj", "{4000B282-9B8E-4B36-A9D6-85DD0F8E9FBC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4000B282-9B8E-4B36-A9D6-85DD0F8E9FBC}.Debug|x64.ActiveCfg = Debug|x64
+		{4000B282-9B8E-4B36-A9D6-85DD0F8E9FBC}.Debug|x64.Build.0 = Debug|x64
+		{4000B282-9B8E-4B36-A9D6-85DD0F8E9FBC}.Debug|x86.ActiveCfg = Debug|Win32
+		{4000B282-9B8E-4B36-A9D6-85DD0F8E9FBC}.Debug|x86.Build.0 = Debug|Win32
+		{4000B282-9B8E-4B36-A9D6-85DD0F8E9FBC}.Release|x64.ActiveCfg = Release|x64
+		{4000B282-9B8E-4B36-A9D6-85DD0F8E9FBC}.Release|x64.Build.0 = Release|x64
+		{4000B282-9B8E-4B36-A9D6-85DD0F8E9FBC}.Release|x86.ActiveCfg = Release|Win32
+		{4000B282-9B8E-4B36-A9D6-85DD0F8E9FBC}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {96EA1A5E-2885-482C-9887-D0DB1904EDF0}
+	EndGlobalSection
+EndGlobal
