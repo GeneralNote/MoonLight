@@ -22,6 +22,8 @@ namespace ml
 		assert(size.x > 0);
 		assert(size.y > 0);
 
+		mInitialConfig = info;
+
 		SetProcessDPIAware();
 
 		// convert std::string to std::wstring
@@ -108,10 +110,10 @@ namespace ml
 		depthTexDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
 		depthTexDesc.Height = size.y;
 		depthTexDesc.ArraySize = 1;
-		depthTexDesc.SampleDesc.Count = 1;
 		depthTexDesc.MipLevels = 1;
 		depthTexDesc.Usage = D3D11_USAGE_DEFAULT;
 		depthTexDesc.Width = size.x;
+		depthTexDesc.SampleDesc = info.Sample;
 
 		mDevice->CreateTexture2D(&depthTexDesc, nullptr, mDepthTexture.GetAddressOf());
 		mDevice->CreateDepthStencilView(mDepthTexture.Get(), nullptr, mDepthView.GetAddressOf());
@@ -499,7 +501,7 @@ namespace ml
 		depthTexDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
 		depthTexDesc.Height = mSize.y;
 		depthTexDesc.ArraySize = 1;
-		depthTexDesc.SampleDesc.Count = 1;
+		depthTexDesc.SampleDesc = mInitialConfig.Sample;
 		depthTexDesc.MipLevels = 1;
 		depthTexDesc.Usage = D3D11_USAGE_DEFAULT;
 		depthTexDesc.Width = mSize.x;

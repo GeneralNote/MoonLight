@@ -129,6 +129,7 @@ namespace ml
 		bool mOpen;						// is the window currently opened
 		bool mVSync;					// is vsync turned on?
 		float mClearColor[4];			// clear color
+		Config mInitialConfig;			// config that was used on startup
 	};
 }
 

@@ -54,6 +54,9 @@ namespace ml
 			// open file
 			FILE *file = fopen(filename.c_str(), "rb");
 
+			if (file == nullptr)
+				return false;
+
 			// get file size
 			fseek(file, 0, SEEK_END);
 			long bytecodeLen = ftell(file);

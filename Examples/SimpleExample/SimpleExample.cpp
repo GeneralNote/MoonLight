@@ -67,11 +67,7 @@ int main()
 
 	ml::Event e;
 	while (wnd.IsOpen()) {
-		while (wnd.GetEvent(e)) {
-			if (e.Type == ml::EventType::WindowClose) {
-				// do something on close
-			}
-		}
+		while (wnd.GetEvent(e)) { }
 
 		// update constant buffer
 		DirectX::XMMATRIX wvp = DirectX::XMMatrixRotationY(DirectX::XMConvertToRadians(45)) * DirectX::XMMatrixTranslation(0, 0, 7);
@@ -97,7 +93,6 @@ int main()
 		
 		// render vertex buffer
 		wnd.Draw(verts.size());
-		// engine->DrawIndexed(ind.size());
 
 		// render everything
 		wnd.Render();

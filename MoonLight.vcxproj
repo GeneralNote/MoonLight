@@ -27,7 +27,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -157,8 +157,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Examples\TextureSimple\TextureSimple.cpp" />
     <ClCompile Include="src\Base\Bounds.cpp" />
     <ClCompile Include="src\Base\Color.cpp" />
+    <ClCompile Include="src\Base\Image.cpp" />
+    <ClCompile Include="src\Base\SamplerState.cpp" />
+    <ClCompile Include="src\Base\ShaderResourceView.cpp" />
+    <ClCompile Include="src\Base\Texture.cpp" />
+    <ClCompile Include="src\Base\Timer.cpp" />
     <ClCompile Include="src\Model\Model.cpp" />
     <ClCompile Include="src\Base\VertexInputLayout.cpp" />
     <ClCompile Include="src\Base\Math.cpp" />
@@ -173,6 +179,10 @@
     <ClInclude Include="inc\MoonLight\Base\Buffer.h" />
     <ClInclude Include="inc\MoonLight\Base\Color.h" />
     <ClInclude Include="inc\MoonLight\Base\Resource.h" />
+    <ClInclude Include="inc\MoonLight\Base\SamplerState.h" />
+    <ClInclude Include="inc\MoonLight\Base\ShaderResourceView.h" />
+    <ClInclude Include="inc\MoonLight\Base\Texture.h" />
+    <ClInclude Include="inc\MoonLight\Base\Timer.h" />
     <ClInclude Include="inc\MoonLight\Base\Topology.h" />
     <ClInclude Include="inc\MoonLight\Base\VertexInputLayout.h" />
     <ClInclude Include="inc\MoonLight\Base\PixelShader.h" />
@@ -195,7 +205,6 @@
     <ClInclude Include="inc\MoonLight\Model\OBJModel.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Examples\SimpleExample\README.md" />
     <None Include="inc\MoonLight\Base\Buffer.inl" />
     <None Include="inc\MoonLight\Base\ConstantBuffer.inl" />
     <None Include="inc\MoonLight\Base\VertexBuffer.inl" />
