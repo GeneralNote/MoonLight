@@ -4,6 +4,8 @@ namespace ml
 {
 	bool ShaderResourceView::Create(ml::Window & wnd, ml::Texture & tex)
 	{
+		mView.Reset();
+
 		HRESULT hr = wnd.GetDevice()->CreateShaderResourceView(tex.GetTexture(), nullptr, mView.GetAddressOf());
 		mWnd = &wnd;
 

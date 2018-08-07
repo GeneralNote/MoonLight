@@ -13,6 +13,9 @@ namespace ml
 	}
 	bool Image::LoadFromFile(const std::string & fname)
 	{
+		if (mData != nullptr)
+			mData->Release();
+
 		// open file
 		FILE *file = fopen(fname.c_str(), "rb");
 
@@ -41,7 +44,8 @@ namespace ml
 	bool Image::LoadFromMemory(const char * data, ml::UInt32 dataLen)
 	{
 		DirectX::TexMetadata meta;
-		HRESULT hr = DirectX::LoadFromWICMemory(data, dataLen, 0, &meta, *mData, nullptr);
+		HRESULT hr = DirectX::LoadFromDDSMemory(data, dataLen, 0, &meta, *mData);
+		// support other file formats ^^^ TODO
 
 		return !FAILED(hr);
 	}

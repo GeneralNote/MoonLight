@@ -4,8 +4,12 @@
 #include <MoonLight/Base/VertexShader.h>
 #include <MoonLight/Base/VertexBuffer.h>
 #include <MoonLight/Base/ConstantBuffer.h>
+#include <MoonLight/Base/Texture.h>
+#include <MoonLight/Base/Image.h>
+#include <MoonLight/Base/ShaderResourceView.h>
+#include <MoonLight/Base/SamplerState.h>
 #include <MoonLight/Model/OBJModel.h>
-#include "Camera.h"
+#include "../Common/Camera.h"
 
 struct MyVertex
 {
@@ -36,6 +40,7 @@ int main()
 	ml::VertexInputLayout vertexInfo;
 	vertexInfo.Add("POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0);
 	vertexInfo.Add("NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 12);
+	vertexInfo.Add("TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 24);
 
 	// load pixel shader
 	ml::PixelShader pxShader;
@@ -48,14 +53,31 @@ int main()
 
 	// load model
 	ml::OBJModel obj;
-	obj.LoadFromFile("uh60.obj");
+	obj.LoadFromFile("car.obj");
 
-	// get rear and main rotor center
-	DirectX::XMFLOAT3 cRearRotor = obj.GetGroupBounds("rear_rotor").Center();
-	DirectX::XMFLOAT3 cMainRotor = obj.GetGroupBounds("main_rotor").Center();
+	// load all images, create textures and views
+	struct OBJTexBind
+	{
+		ml::Texture Texture;
+		ml::Image Image;
+		ml::ShaderResourceView View;
+	};
+	std::unordered_map<std::string, OBJTexBind> objTexData;
+	std::vector<ml::OBJModel::MaterialData> matData = obj.GetMaterialList();
+	for (ml::OBJModel::MaterialData mat : matData) {
+		if (mat.Texture.empty() || objTexData.count(mat.Texture) > 0)
+			continue;
+		objTexData[mat.Texture].Image.LoadFromFile(mat.Texture);
+		objTexData[mat.Texture].Texture.Create(wnd, objTexData[mat.Texture].Image);
+		objTexData[mat.Texture].View.Create(wnd, objTexData[mat.Texture].Texture);
+	}
+
+	// create sampler state
+	ml::SamplerState sampler;
+	sampler.Create(wnd);
 
 	// get list of the groups
-	std::vector<std::string> objGroups = obj.GetGroups();
+	std::vector<std::string> objGroups = obj.GetObjects();
 
 	// create vertex buffer
 	ml::VertexBuffer<ml::OBJModel::Vertex> vertBuffer;
@@ -123,10 +145,10 @@ int main()
 				mousePressed = false;
 		}
 
-		// calculate rotation for the rear/main rotor
-		// NOTE: its frame dependant! i was too lazy
-		static float rota = 0;
-		rota += 1.f;
+		// update WVP const buffer once per frame
+		DirectX::XMStoreFloat4x4(&cbDataWVP.matWVP, XMMatrixTranspose(DirectX::XMMatrixIdentity() * view * proj));
+		DirectX::XMStoreFloat4x4(&cbDataWVP.matWorld, XMMatrixTranspose(DirectX::XMMatrixIdentity()));
+		cbWVP.Update(&cbDataWVP);
 
 		// clear back buffer and depth and stencil buffer
 		wnd.Clear();
@@ -144,38 +166,11 @@ int main()
 		cbWVP.BindVS(0);			// bind cbWVP on first(0) slot
 		cbMaterial.BindVS(1);		// bind cbMaterial on second(1) slot
 		vertBuffer.Bind();
+		sampler.BindPS();
 
 		for (const std::string& gname : objGroups) {
-			std::pair<ml::OBJModel::Material*, ml::UInt32>* mats = obj.GetGroupMaterials(gname);
-			ml::UInt32 matCount = obj.GetGroupMaterialCount(gname);
-
-			// rotate main_rotor and rear_rotor groups
-			if (gname == "main_rotor") {
-				// rotate the object
-				world = DirectX::XMMatrixTranslation(-cMainRotor.x, -cMainRotor.y, -cMainRotor.z) *		// center in the world origin first
-					DirectX::XMMatrixRotationZ(DirectX::XMConvertToRadians(rota)) *						// rotate around origin
-					DirectX::XMMatrixTranslation(cMainRotor.x, cMainRotor.y, cMainRotor.z);				// restore its original position
-
-
-				DirectX::XMStoreFloat4x4(&cbDataWVP.matWVP, XMMatrixTranspose(world * view * proj));
-				DirectX::XMStoreFloat4x4(&cbDataWVP.matWorld, XMMatrixTranspose(world));
-				cbWVP.Update(&cbDataWVP);
-			}
-			else if (gname == "rear_rotor") {
-				// rotate the object
-				world = DirectX::XMMatrixTranslation(-cRearRotor.x, -cRearRotor.y, -cRearRotor.z) *		// center in the world origin first
-					DirectX::XMMatrixRotationX(DirectX::XMConvertToRadians(rota)) *						// rotate around origin
-					DirectX::XMMatrixTranslation(cRearRotor.x, cRearRotor.y, cRearRotor.z);				// restore its original position
-
-				DirectX::XMStoreFloat4x4(&cbDataWVP.matWVP, XMMatrixTranspose(world * view * proj));
-				DirectX::XMStoreFloat4x4(&cbDataWVP.matWorld, XMMatrixTranspose(world));
-				cbWVP.Update(&cbDataWVP);
-			}
-			else {
-				DirectX::XMStoreFloat4x4(&cbDataWVP.matWVP, XMMatrixTranspose(DirectX::XMMatrixIdentity() * view * proj));
-				DirectX::XMStoreFloat4x4(&cbDataWVP.matWorld, XMMatrixTranspose(DirectX::XMMatrixIdentity()));
-				cbWVP.Update(&cbDataWVP);
-			}
+			std::pair<ml::OBJModel::MaterialData*, ml::UInt32>* mats = obj.GetObjectMaterials(gname);
+			ml::UInt32 matCount = obj.GetObjectMaterialCount(gname);
 
 			for (ml::UInt32 i = 0; i < matCount; i++) {
 				// get the vertex start for this groups material
@@ -186,10 +181,14 @@ int main()
 				if (i != matCount - 1)
 					matVCount = mats[i + 1].second - matVStart;
 				else
-					matVCount = obj.GetGroupVertexCount(gname) + obj.GetGroupVertexStart(gname) - matVStart;
+					matVCount = obj.GetObjectVertexCount(gname) + obj.GetObjectVertexStart(gname) - matVStart;
 
-				// update the material material
-				cbMaterial.Update(mats[i].first);
+				// update the object material
+				cbMaterial.Update(&mats[i].first->Material);
+
+				// bind the right texture
+				if (!mats[i].first->Texture.empty())
+					objTexData[mats[i].first->Texture].View.BindPS();
 
 				// draw the group/object part with this material
 				wnd.Draw(matVCount, matVStart);

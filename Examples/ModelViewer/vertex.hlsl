@@ -14,6 +14,7 @@ struct VSInput
 {
 	float3 Position : POSITION;
 	float3 Normal : NORMAL;
+	float2 UV : TEXCOORD;
 };
 
 struct VSOutput
@@ -21,10 +22,11 @@ struct VSOutput
 	float4 Position : SV_POSITION;
 	float4 Color : COLOR;
 	float3 Normal : NORMAL;
+	float2 UV : TEXCOORD;
 };
 
-static const float3 LightPos = float3(-5, 10, 5);
-static const float4 LightDiffuse = float4(0.5f, 0.5f, 0.5f, 1);
+static const float3 LightPos = float3(50, 50, 50);
+static const float4 LightDiffuse = float4(1.0f, 1.0f, 1.0f, 1);
 
 VSOutput main(VSInput vin)
 {
@@ -40,6 +42,7 @@ VSOutput main(VSInput vin)
 	float diffuse = max(dot(worldNormal, lightVec), 0);
 
 	vout.Color = float4(mAmbient, 0) + mDiffuse * LightDiffuse * diffuse;
+	vout.UV = vin.UV;
 
 	return vout;
 }

@@ -174,6 +174,7 @@ namespace ml
 
 						fBuffer[i] = atof(cBuffer);
 					}
+					fBuffer[1] = 1 - fBuffer[1];
 					vt[vtCount] = XMFLOAT2(fBuffer);
 
 					// increase the count
@@ -240,7 +241,7 @@ namespace ml
 
 				// check if the previous object has a material and give it material if it doesnt have any
 				if (groups > 0) {
-					std::vector<std::pair<Material*, UInt32>>& mats = mGroupMat[mGroups[groups - 1]];
+					std::vector<std::pair<MaterialData*, UInt32>>& mats = mGroupMat[mGroups[groups - 1]];
 					if (mats.empty())
 						mats.push_back(std::make_pair(GetMaterialByName(std::string(lastMaterial)), mGroupStartVerts[groups-1]));
 				}
@@ -271,7 +272,7 @@ namespace ml
 
 				// check if the previous object has a material and give it material if it doesnt have any
 				if (objects > 0) {
-					std::vector<std::pair<Material*, UInt32>>& mats = mObjectMat[mObjects[objects - 1]];
+					std::vector<std::pair<MaterialData*, UInt32>>& mats = mObjectMat[mObjects[objects - 1]];
 					if (mats.empty())
 						mats.push_back(std::make_pair(GetMaterialByName(std::string(lastMaterial)), mObjectStartVerts[objects - 1]));
 				}
@@ -304,14 +305,14 @@ namespace ml
 
 					// first check if previous set of faces in this group/object have material
 					if (objects > 0) {
-						std::vector<std::pair<Material*, UInt32>>& mats = mObjectMat[mObjects[objects - 1]];
+						std::vector<std::pair<MaterialData*, UInt32>>& mats = mObjectMat[mObjects[objects - 1]];
 
 						// check if the previous set of faces in this group dont have material
 						if (mats.empty() && mVertCount - mObjectStartVerts[objects - 1] != 0)
 							mats.push_back(std::make_pair(GetMaterialByName(std::string(lastMaterial)), mObjectStartVerts[objects - 1]));
 					}
 					if (groups > 0) {
-						std::vector<std::pair<Material*, UInt32>>& mats = mGroupMat[mGroups[groups - 1]];
+						std::vector<std::pair<MaterialData*, UInt32>>& mats = mGroupMat[mGroups[groups - 1]];
 
 						// check if the previous set of faces in this group dont have material
 						if (mats.empty() && mVertCount - mGroupStartVerts[groups - 1] != 0)
@@ -414,19 +415,18 @@ namespace ml
 
 		mObjectMat.clear();
 		mGroupMat.clear();
-		mMaterialNames.clear();
 		mMaterials.clear();
 
 		mBounds = ml::Bounds3D();
 		mInitializedBounds = false;
 	}
-	std::pair<OBJModel::Material*, ml::UInt32>* OBJModel::GetObjectMaterials(const std::string & obj)
+	std::pair<OBJModel::MaterialData*, ml::UInt32>* OBJModel::GetObjectMaterials(const std::string & obj)
 	{
 		if (mObjectMat.count(obj) > 0)
 			return mObjectMat[obj].data();
 		return nullptr;
 	}
-	std::pair<OBJModel::Material*, ml::UInt32>* OBJModel::GetGroupMaterials(const std::string & obj)
+	std::pair<OBJModel::MaterialData*, ml::UInt32>* OBJModel::GetGroupMaterials(const std::string & obj)
 	{
 		if (mGroupMat.count(obj) > 0)
 			return mGroupMat[obj].data();
@@ -444,10 +444,10 @@ namespace ml
 			return mGroupMat[obj].size();
 		return 0;
 	}
-	OBJModel::Material * OBJModel::GetMaterialByName(const std::string & name)
+	OBJModel::MaterialData* OBJModel::GetMaterialByName(const std::string & name)
 	{
-		for (int i = 0; i < mMaterialNames.size(); i++)
-			if (mMaterialNames[i] == name)
+		for (int i = 0; i < mMaterials.size(); i++)
+			if (mMaterials[i].Name == name)
 				return &mMaterials[i];
 		return nullptr;
 	}
@@ -546,8 +546,7 @@ namespace ml
 					memcpy(cBuffer, start, data - start);
 					cBuffer[data - start] = 0;
 
-					mMaterials.push_back(Material());
-					mMaterialNames.push_back(std::string(cBuffer));
+					mMaterials.push_back(MaterialData(std::string(cBuffer)));
 				}
 			}
 			// K[letter]
@@ -573,7 +572,7 @@ namespace ml
 						fBuffer[i] = atof(cBuffer);
 					}
 					fBuffer[3] = 1.0f;
-					mMaterials[mMaterials.size()-1].Diffuse = XMFLOAT4(fBuffer);
+					mMaterials[mMaterials.size()-1].Material.Diffuse = XMFLOAT4(fBuffer);
 				}
 				// Ka [float] [float] [float] -> ambient
 				else if (*data == 'a') {
@@ -593,7 +592,7 @@ namespace ml
 
 						fBuffer[i] = atof(cBuffer);
 					}
-					mMaterials[mMaterials.size() - 1].Ambient = XMFLOAT3(fBuffer);
+					mMaterials[mMaterials.size() - 1].Material.Ambient = XMFLOAT3(fBuffer);
 				}
 				// Ks [float] [float] [float] -> specular
 				else if (*data == 's') {
@@ -614,7 +613,7 @@ namespace ml
 						fBuffer[i] = atof(cBuffer);
 					}
 					fBuffer[3] = 0;
-					mMaterials[mMaterials.size() - 1].Specular = XMFLOAT4(fBuffer);
+					mMaterials[mMaterials.size() - 1].Material.Specular = XMFLOAT4(fBuffer);
 				}
 			}
 			// d [float] -> transparency
@@ -631,7 +630,7 @@ namespace ml
 				memcpy(cBuffer, start, data - start);
 				cBuffer[data - start] = 0;
 
-				mMaterials[mMaterials.size() - 1].Diffuse.w = atof(cBuffer);
+				mMaterials[mMaterials.size() - 1].Material.Diffuse.w = atof(cBuffer);
 			}
 			// Tr [float] -> 1-transparency
 			else if (*data == 'T') {
@@ -647,7 +646,7 @@ namespace ml
 				memcpy(cBuffer, start, data - start);
 				cBuffer[data - start] = 0;
 
-				mMaterials[mMaterials.size() - 1].Diffuse.w = 1 - atof(cBuffer);
+				mMaterials[mMaterials.size() - 1].Material.Diffuse.w = 1 - atof(cBuffer);
 			}
 			// N
 			else if (*data == 'N') {
@@ -665,7 +664,40 @@ namespace ml
 					memcpy(cBuffer, start, data - start);
 					cBuffer[data - start] = 0;
 
-					mMaterials[mMaterials.size() - 1].Specular.w = atof(cBuffer);
+					mMaterials[mMaterials.size() - 1].Material.Specular.w = atof(cBuffer);
+				}
+			}
+			// map_*
+			if (*data == 'm') {
+				// skip the letter 'm'
+				data++;
+
+				// parse the float
+				char *start = data;
+
+				// skip to next space
+				do { data++; } while (!isspace(*data));
+
+				memcpy(cBuffer, start, data - start);
+				cBuffer[data - start] = 0;
+
+				// map_Kd - diffuse map
+				if (strcmp(cBuffer, "ap_Kd") == 0) {
+					// skip the letter 'm'
+					data++;
+
+					// parse the float
+					start = data;
+
+					// skip to next space
+					do { data++; } while (!isspace(*data));
+
+					if (data - start > 1) {
+						memcpy(cBuffer, start, data - start);
+						cBuffer[data - start] = 0;
+
+						mMaterials[mMaterials.size() - 1].Texture = std::string(cBuffer);
+					}
 				}
 			}
 

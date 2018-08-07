@@ -4,6 +4,8 @@ namespace ml
 {
 	bool Texture::Create(ml::Window& wnd, ml::Image & img, ml::UInt32 bind, bool cubemap, ml::Resource::Usage usg, ml::UInt32 access)
 	{
+		mTexture.Reset();
+
 		UINT srv = (bind & Texture::Bind::ShaderResource) * D3D11_BIND_SHADER_RESOURCE;
 		UINT rtv = (bind & Texture::Bind::RenderTarget) * D3D11_BIND_RENDER_TARGET;
 

@@ -8,6 +8,7 @@ NOTE: the rotor movement is choppy only on the GIF. The FPS didnt sync, the prog
 - [x] ml::Timer
 - [ ] Viewport
 - [x] ml\::Texture, ml::Image
+- [ ] multiple file formats (support .dds)
 - [ ] ml::Logger & check for HRESULTs
 - [ ] convert ml\::Resource::CPUAccess parameters to UInt8 so that bitwise operators can be used
 - [ ] make Shader class implement LoadFromFile which calls LoadFromMemory

@@ -29,6 +29,18 @@ namespace ml
 			DirectX::XMFLOAT4 Specular;	// float4(RGB, Exponent)
 			DirectX::XMFLOAT3 Ambient;	// float3(RGB)
 		};
+		struct MaterialData
+		{
+			MaterialData() {}
+
+			MaterialData(const std::string& name) :
+				Name(name)
+			{}
+
+			std::string Name;
+			Material Material;
+			std::string Texture;
+		};
 
 		// Vertex that can represent all the .obj files
 		struct Vertex
@@ -67,16 +79,16 @@ namespace ml
 		void Release();
 
 		// get material for a group/object
-		std::pair<OBJModel::Material*, ml::UInt32>* GetObjectMaterials(const std::string& obj);
-		std::pair<OBJModel::Material*, ml::UInt32>* GetGroupMaterials(const std::string& obj);
+		std::pair<OBJModel::MaterialData*, ml::UInt32>* GetObjectMaterials(const std::string& obj);
+		std::pair<OBJModel::MaterialData*, ml::UInt32>* GetGroupMaterials(const std::string& obj);
 		ml::UInt32 GetObjectMaterialCount(const std::string& obj);
 		ml::UInt32 GetGroupMaterialCount(const std::string& obj);
 
 		// get material using its name
-		Material* GetMaterialByName(const std::string& name);
+		MaterialData* GetMaterialByName(const std::string& name);
 
 		// get material list
-		inline std::vector<Material> GetMaterialList() { return mMaterials; }
+		inline std::vector<MaterialData> GetMaterialList() { return mMaterials; }
 
 		// get object bounds
 		inline ml::Bounds3D GetBounds() { return mBounds; }
@@ -89,10 +101,9 @@ namespace ml
 		Vertex* mVertices;
 		ml::UInt32 mVertCount;
 		std::vector<std::string> mObjects, mGroups;
-		std::unordered_map<std::string, std::vector<std::pair<Material*, ml::UInt32>>> mObjectMat, mGroupMat;
+		std::unordered_map<std::string, std::vector<std::pair<MaterialData*, ml::UInt32>>> mObjectMat, mGroupMat;
 		std::vector<ml::UInt32> mObjectStartVerts, mGroupStartVerts;
-		std::vector<std::string> mMaterialNames;
-		std::vector<Material> mMaterials;
+		std::vector<MaterialData> mMaterials;
 
 		bool mInitializedBounds;
 		ml::Bounds3D mBounds;
