@@ -8,6 +8,8 @@
 #include <MoonLight/Base/Image.h>
 #include <MoonLight/Base/ShaderResourceView.h>
 #include <MoonLight/Base/SamplerState.h>
+#include <MoonLight/Base/BlendState.h>
+#include <MoonLight/Base/RasterizerState.h>
 #include <MoonLight/Model/OBJModel.h>
 #include "../Common/Camera.h"
 
@@ -109,6 +111,17 @@ int main()
 	DirectX::XMStoreFloat4x4(&cbDataWVP.matWorld, XMMatrixTranspose(world));
 	cbWVP.Update(&cbDataWVP);
 
+	// create blend state
+	ml::BlendState blend;
+	blend.Create(wnd);
+	blend.Bind();
+
+	// create rasterizer state
+	ml::RasterizerState rasterizer;
+	rasterizer.Info.CullMode = D3D11_CULL_NONE;
+	rasterizer.Create(wnd);
+	rasterizer.Bind();
+
 	ml::Event e;
 	while (wnd.IsOpen()) {
 		while (wnd.GetEvent(e)) {
@@ -143,6 +156,8 @@ int main()
 			}
 			else if (e.Type == ml::EventType::MouseButtonRelease)
 				mousePressed = false;
+			else if (e.Type == ml::EventType::WindowResize)
+				proj = DirectX::XMMatrixPerspectiveFovLH(DirectX::XMConvertToRadians(45), wnd.GetAspectRatio(), 0.1f, 1000.0f);
 		}
 
 		// update WVP const buffer once per frame

@@ -9,12 +9,22 @@ namespace ml
 	class Image
 	{
 	public:
+		enum class Type
+		{
+			DDS,
+			HDR,
+			TGA,
+			WIC
+		};
+
 		Image();
 		~Image();
 
 		bool LoadFromFile(const std::string& fname);
 
-		bool LoadFromMemory(const char* data, ml::UInt32 dataLen);
+		bool LoadFromFile(const std::string& fname, Type type);
+
+		bool LoadFromMemory(const char* data, ml::UInt32 dataLen, Type type);
 
 		bool GenerateMipMap(size_t levels);
 

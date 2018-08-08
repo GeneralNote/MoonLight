@@ -1,8 +1,6 @@
 # MOONLIGHT
 Simple Direct3D 11 wrapper.
-![Animation](https://i.imgur.com/FQnkPJ0.gif)
-
-NOTE: the rotor movement is choppy only on the GIF. The FPS didnt sync, the program was running at 8K FPS while recording is at 24fps.
+![Animation](https://i.imgur.com/N59IGah.gif)
 
 ## TODO:
 - [x] ml::Timer

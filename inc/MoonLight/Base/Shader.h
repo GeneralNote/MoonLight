@@ -13,7 +13,7 @@ namespace ml
 		Shader();
 		~Shader();
 
-		virtual bool LoadFromFile(ml::Window& wnd, std::string filename, std::string entry, bool needsCompile = true) = 0;
+		bool LoadFromFile(ml::Window& wnd, std::string filename, std::string entry, bool needsCompile = true);
 		virtual bool LoadFromMemory(ml::Window& wnd, const char* code, ml::UInt32 codeLen, std::string entry, bool needsCompile = true) = 0;
 		virtual void Bind() = 0;
 

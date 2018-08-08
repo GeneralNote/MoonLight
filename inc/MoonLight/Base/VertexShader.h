@@ -12,7 +12,6 @@ namespace ml
 		VertexInputLayout* InputSignature;
 
 		VertexShader();
-		virtual bool LoadFromFile(ml::Window& wnd, std::string filename, std::string entry, bool needsCompile = true);
 		virtual bool LoadFromMemory(ml::Window& wnd, const char* code, ml::UInt32 codeLen, std::string entry, bool needsCompile = true);
 		virtual void Bind();
 

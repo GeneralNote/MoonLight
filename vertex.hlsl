@@ -26,7 +26,7 @@ struct VSOutput
 };
 
 static const float3 LightPos = float3(50, 50, 50);
-static const float4 LightDiffuse = float4(1.0f, 1.0f, 1.0f, 1);
+static const float3 LightDiffuse = float3(1.0f, 1.0f, 1.0f);
 
 VSOutput main(VSInput vin)
 {
@@ -41,7 +41,9 @@ VSOutput main(VSInput vin)
 	float3 lightVec = normalize(LightPos - worldPos);
 	float diffuse = max(dot(worldNormal, lightVec), 0);
 
-	vout.Color = float4(mAmbient, 0) + mDiffuse * LightDiffuse * diffuse;
+	vout.Color.xyz = mAmbient + mDiffuse.xyz * LightDiffuse * diffuse;
+	vout.Color.w = mDiffuse.w;
+
 	vout.UV = vin.UV;
 
 	return vout;

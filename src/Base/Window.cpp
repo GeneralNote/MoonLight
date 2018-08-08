@@ -461,6 +461,17 @@ namespace ml
 		mSwapChain->Present(mVSync, 0);
 	}
 
+	void Window::ResetRasterizerState()
+	{
+		mContext->RSSetState(nullptr);
+	}
+
+	void Window::ResetBlendState()
+	{
+		static const float factor[4] = { 0, 0, 0, 0 };
+		mContext->OMSetBlendState(nullptr, factor, 0xFFFFFFFF);
+	}
+
 	LRESULT CALLBACK Window::mHandleEvent(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	{
 		// set the window as user data

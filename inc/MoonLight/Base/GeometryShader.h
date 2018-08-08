@@ -1,16 +1,15 @@
-#ifndef __MOONLIGHT_PIXELSHADER_H__
-#define __MOONLIGHT_PIXELSHADER_H__
+#ifndef __MOONLIGHT_GEOMETRY_SHADER_H__
+#define __MOONLIGHT_GEOMETRY_SHADER_H__
 
 #include <MoonLight/Base/Shader.h>
 
 namespace ml
 {
-	class PixelShader : public Shader
+	class GeometryShader : public Shader
 	{
 	public:
 		virtual bool LoadFromMemory(ml::Window& wnd, const char* code, ml::UInt32 codeLen, std::string entry, bool needsCompile = true);
 		virtual void Bind();
 	};
 }
-
-#endif // __MOONLIGHT_PIXELSHADER_H__
+#endif // __MOONLIGHT_GEOMETRY_SHADER_H__

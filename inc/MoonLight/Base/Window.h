@@ -98,6 +98,12 @@ namespace ml
 		// display back buffer
 		void Render();
 
+		// remove blend state
+		void ResetBlendState();
+
+		// reset
+		void ResetRasterizerState();
+
 		// win32 and D3D stuff - only access from "Base" directory please
 		inline HWND GetWindowHandle() { return mWnd; }
 		inline D3D_FEATURE_LEVEL GetFeatureLevel() { return mFeatureLevel; }
