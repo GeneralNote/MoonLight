@@ -27,26 +27,26 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -158,9 +158,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Examples\Common\Camera.cpp" />
+    <ClCompile Include="Examples\Mirror\main.cpp" />
     <ClCompile Include="src\Base\BlendState.cpp" />
     <ClCompile Include="src\Base\Bounds.cpp" />
     <ClCompile Include="src\Base\Color.cpp" />
+    <ClCompile Include="src\Base\DepthStencilState.cpp" />
     <ClCompile Include="src\Base\GeometryShader.cpp" />
     <ClCompile Include="src\Base\Image.cpp" />
     <ClCompile Include="src\Base\RasterizerState.cpp" />
@@ -183,6 +185,7 @@
     <ClInclude Include="inc\MoonLight\Base\Bounds.h" />
     <ClInclude Include="inc\MoonLight\Base\Buffer.h" />
     <ClInclude Include="inc\MoonLight\Base\Color.h" />
+    <ClInclude Include="inc\MoonLight\Base\DepthStencilState.h" />
     <ClInclude Include="inc\MoonLight\Base\GeometryShader.h" />
     <ClInclude Include="inc\MoonLight\Base\RasterizerState.h" />
     <ClInclude Include="inc\MoonLight\Base\Resource.h" />

@@ -6,6 +6,7 @@ Simple Direct3D 11 wrapper.
 - [x] ml::Timer
 - [ ] Viewport
 - [x] ml\::Texture, ml::Image
+- [ ] assert(mWnd != nullptr)
 - [ ] multiple file formats (support .dds)
 - [ ] ml::Logger & check for HRESULTs
 - [ ] convert ml\::Resource::CPUAccess parameters to UInt8 so that bitwise operators can be used

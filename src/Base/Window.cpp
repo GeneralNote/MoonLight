@@ -441,6 +441,11 @@ namespace ml
 		mContext->ClearDepthStencilView(mDepthView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, depth, stencil);
 	}
 
+	void Window::ClearStencil(ml::UInt8 value)
+	{
+		mContext->ClearDepthStencilView(mDepthView.Get(), D3D11_CLEAR_STENCIL, 1.0f, value);
+	}
+
 	void Window::SetTopology(ml::Topology topology)
 	{
 		mContext->IASetPrimitiveTopology((D3D11_PRIMITIVE_TOPOLOGY)topology);
@@ -461,12 +466,22 @@ namespace ml
 		mSwapChain->Present(mVSync, 0);
 	}
 
-	void Window::ResetRasterizerState()
+	void Window::RemoveRasterizerState()
 	{
 		mContext->RSSetState(nullptr);
 	}
 
-	void Window::ResetBlendState()
+	void Window::RemoveDepthStencilState()
+	{
+		mContext->OMSetDepthStencilState(nullptr, 0);
+	}
+
+	void Window::RemoveGeometryShader()
+	{
+		mContext->GSSetShader(nullptr, nullptr, 0);
+	}
+
+	void Window::RemoveBlendState()
 	{
 		static const float factor[4] = { 0, 0, 0, 0 };
 		mContext->OMSetBlendState(nullptr, factor, 0xFFFFFFFF);

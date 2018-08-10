@@ -83,8 +83,9 @@ namespace ml
 		// clear back buffer
 		void Clear();
 
-		// clear depth stencil texture
+		// clear depth/stencil texture
 		void ClearDepthStencil(float depth, ml::UInt8 stencil);
+		void ClearStencil(ml::UInt8 value);
 
 		// set primitive topology
 		void SetTopology(ml::Topology topology);
@@ -98,11 +99,11 @@ namespace ml
 		// display back buffer
 		void Render();
 
-		// remove blend state
-		void ResetBlendState();
-
-		// reset
-		void ResetRasterizerState();
+		// reset some states
+		void RemoveBlendState();
+		void RemoveRasterizerState();
+		void RemoveDepthStencilState();
+		void RemoveGeometryShader();
 
 		// win32 and D3D stuff - only access from "Base" directory please
 		inline HWND GetWindowHandle() { return mWnd; }
