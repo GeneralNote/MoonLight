@@ -10,8 +10,8 @@ namespace ml
 	class ConstantBuffer : public Buffer<T>
 	{
 	public:
-		void Create(ml::Window& wnd, T* data, ml::UInt32 dataSize, ml::Resource::Usage usage = ml::Resource::Default, ml::Resource::CPUAccess access = ml::Resource::CPUAccess::CPUNone);
-		void Create(ml::Window& wnd, ml::UInt32 dataSize, ml::Resource::Usage = ml::Resource::Default, ml::Resource::CPUAccess = ml::Resource::CPUAccess::CPUNone);
+		void Create(ml::Window& wnd, T* data, ml::UInt32 dataSize, ml::Resource::Flags flags = 0);
+		void Create(ml::Window& wnd, ml::UInt32 dataSize, ml::Resource::Flags flags = 0);
 		void Update(T* data);
 		void BindVS(ml::UInt32 slot = 0);
 		void BindHS(ml::UInt32 slot = 0);

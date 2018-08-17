@@ -75,7 +75,7 @@ int main()
 
 	// load texture from image
 	ml::Texture tex;
-	tex.Create(wnd, img, ml::Texture::ShaderResource);
+	tex.Create(wnd, img);
 
 	// create view for that texture
 	ml::ShaderResourceView srv;

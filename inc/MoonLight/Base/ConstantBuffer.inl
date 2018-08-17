@@ -1,16 +1,15 @@
 
 template<typename T>
-inline void ConstantBuffer<T>::Create(ml::Window & wnd, T * data, ml::UInt32 dataSize, ml::Resource::Usage usage, ml::Resource::CPUAccess access)
+inline void ConstantBuffer<T>::Create(ml::Window & wnd, T * data, ml::UInt32 dataSize, ml::Resource::Flags flags)
 {
 	this->mWindow = &wnd;
 
 	D3D11_BUFFER_DESC buffDesc;
-	buffDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 	buffDesc.ByteWidth = dataSize;
-	buffDesc.CPUAccessFlags = (UINT)access;
-	buffDesc.MiscFlags = 0;
 	buffDesc.StructureByteStride = 0;
-	buffDesc.Usage = (D3D11_USAGE)usage;
+
+	ml::Resource::Options::Parse(flags, (UINT32&)buffDesc.Usage, buffDesc.CPUAccessFlags, buffDesc.BindFlags, buffDesc.MiscFlags);
+	buffDesc.BindFlags |= D3D11_BIND_CONSTANT_BUFFER;
 
 	if (data != nullptr) {
 		D3D11_SUBRESOURCE_DATA sub;
@@ -25,9 +24,9 @@ inline void ConstantBuffer<T>::Create(ml::Window & wnd, T * data, ml::UInt32 dat
 }
 
 template<typename T>
-inline void ConstantBuffer<T>::Create(ml::Window & wnd, ml::UInt32 dataSize, ml::Resource::Usage usg, ml::Resource::CPUAccess access)
+inline void ConstantBuffer<T>::Create(ml::Window & wnd, ml::UInt32 dataSize, ml::Resource::Flags flags)
 {
-	this->Create(wnd, nullptr, dataSize, usg, access);
+	this->Create(wnd, nullptr, dataSize, flags);
 }
 
 template<typename T>

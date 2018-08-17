@@ -12,14 +12,7 @@ namespace ml
 	class Texture
 	{
 	public:
-		enum Bind
-		{
-			None,
-			ShaderResource,		// the texture will be used as a shader resource
-			RenderTarget		// we will render on the texture
-		};
-
-		bool Create(ml::Window& wnd, ml::Image& img, ml::UInt32 bind = Bind::ShaderResource, bool isCubemap = false, ml::Resource::Usage usg = ml::Resource::Default, ml::UInt32 access = ml::Resource::CPUNone);
+		bool Create(ml::Window& wnd, ml::Image& img, ml::Resource::Flags flags = ml::Resource::ShaderResource);
 
 		inline ID3D11Texture2D* GetTexture() { return mTexture.Get(); }
 

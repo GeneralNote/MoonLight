@@ -91,7 +91,7 @@ int main()
 
 	// create constant buffer
 	ml::ConstantBuffer<ConstantBufferWVP> cbWVP;
-	cbWVP.Create(wnd, &cbDataWVP, sizeof(cbDataWVP), ml::Resource::Default);
+	cbWVP.Create(wnd, &cbDataWVP, sizeof(cbDataWVP));
 
 	// create material constant buffer
 	ml::ConstantBuffer<ml::OBJModel::Material> cbMaterial;

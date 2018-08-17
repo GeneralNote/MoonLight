@@ -63,7 +63,7 @@ int main()
 
 	// create constant buffer
 	ml::ConstantBuffer<ConstantBufferWVP> cbWVP;
-	cbWVP.Create(wnd, &cbDataWVP, sizeof(cbDataWVP), ml::Resource::Default);
+	cbWVP.Create(wnd, &cbDataWVP, sizeof(cbDataWVP));
 
 	ml::Event e;
 	while (wnd.IsOpen()) {

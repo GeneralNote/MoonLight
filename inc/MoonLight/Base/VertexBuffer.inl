@@ -1,15 +1,14 @@
 template<typename T>
-inline void VertexBuffer<T>::Create(ml::Window& wnd, T* vert, ml::UInt32 vertCount, ml::Resource::Usage usg, ml::Resource::CPUAccess access)
+inline void VertexBuffer<T>::Create(ml::Window& wnd, T* vert, ml::UInt32 vertCount, ml::Resource::Flags flags)
 {
 	this->mWindow = &wnd;
 
 	D3D11_BUFFER_DESC buffDesc;
-	buffDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 	buffDesc.ByteWidth = sizeof(T)*vertCount;
-	buffDesc.CPUAccessFlags = access;
-	buffDesc.MiscFlags = 0;
-	buffDesc.StructureByteStride = 0;
-	buffDesc.Usage = (D3D11_USAGE)usg;
+	buffDesc.StructureByteStride = sizeof(T);
+
+	ml::Resource::Options::Parse(flags, (UINT32&)buffDesc.Usage, buffDesc.CPUAccessFlags, buffDesc.BindFlags, buffDesc.MiscFlags);
+	buffDesc.BindFlags |= D3D11_BIND_VERTEX_BUFFER;
 
 	if (vert != nullptr) {
 		D3D11_SUBRESOURCE_DATA sub;
@@ -24,9 +23,9 @@ inline void VertexBuffer<T>::Create(ml::Window& wnd, T* vert, ml::UInt32 vertCou
 }
 
 template<typename T>
-inline void VertexBuffer<T>::Create(ml::Window& wnd, ml::UInt32 vertCount, ml::Resource::Usage usg, ml::Resource::CPUAccess access)
+inline void VertexBuffer<T>::Create(ml::Window& wnd, ml::UInt32 vertCount, ml::Resource::Flags flags)
 {
-	this->Create(wnd, nullptr, vertCount, usg, access);
+	this->Create(wnd, nullptr, vertCount, flags);
 }
 
 template<typename T>

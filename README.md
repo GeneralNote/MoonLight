@@ -5,6 +5,9 @@ Simple Direct3D 11 wrapper.
 ## TODO:
 - [x] ml::Timer
 - [ ] Viewport
+- [ ] StructuredBuffer<T\>, Buffer<T\>, Consume/AppendStructuredBuffer
+- [ ] UnorderedAccessView + ShaderResourceView (*RW*Texture2D, *RW*StructuredBuffer, *RW*Buffer)
+- [ ] ComputeShader
 - [x] ml\::Texture, ml::Image
 - [ ] assert(mWnd != nullptr)
 - [ ] multiple file formats (support .dds)
