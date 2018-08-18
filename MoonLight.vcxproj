@@ -157,8 +157,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Examples\Billboard\main.cpp" />
     <ClCompile Include="Examples\Common\Camera.cpp" />
-    <ClCompile Include="Examples\TimerSimple\main.cpp" />
     <ClCompile Include="src\Base\BlendState.cpp" />
     <ClCompile Include="src\Base\Bounds.cpp" />
     <ClCompile Include="src\Base\Color.cpp" />

@@ -34,7 +34,7 @@ namespace ml
 		char cBuffer[CBUFFER_SIZE] = { 0 };
 		char lastMaterial[CBUFFER_SIZE] = { 0 };
 		float fBuffer[FBUFFER_SIZE] = { 0 };
-		ml::UInt32 iBuffer[IBUFFER_SIZE] = { 0 };
+		ml::SInt32 iBuffer[IBUFFER_SIZE] = { 0 };
 
 		// count the number of 'F', 'V', 'VN', 'VT' commands that are in file
 		// we do this so that we dont have to call realloc at all whis slowed
@@ -185,6 +185,9 @@ namespace ml
 			else if (*code == 'f') {
 				code++;
 
+				// reset the index buffer
+				memset(iBuffer, -1, sizeof(SInt32) * IBUFFER_SIZE);
+
 				// parse the 3 groups
 				for (ml::UInt8 j = 0; j < 3; ++j) {
 					// parse the v/vt/vn indices
@@ -204,17 +207,33 @@ namespace ml
 					}
 				}
 
+				// position is a must have
 				mVertices[mVertCount].Position = v[iBuffer[0]];
-				mVertices[mVertCount].UV = vt[iBuffer[1]];
-				mVertices[mVertCount].Normal = vn[iBuffer[2]];
-
 				mVertices[mVertCount + 1].Position = v[iBuffer[3]];
-				mVertices[mVertCount + 1].UV = vt[iBuffer[4]];
-				mVertices[mVertCount + 1].Normal = vn[iBuffer[5]];
-
 				mVertices[mVertCount + 2].Position = v[iBuffer[6]];
-				mVertices[mVertCount + 2].UV = vt[iBuffer[7]];
-				mVertices[mVertCount + 2].Normal = vn[iBuffer[8]];
+
+				// default the UVs and normals
+				mVertices[mVertCount].Normal = DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f);
+				mVertices[mVertCount + 1].Normal = DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f);
+				mVertices[mVertCount + 2].Normal = DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f);
+
+				mVertices[mVertCount].UV = DirectX::XMFLOAT2(0.0f, 0.0f);
+				mVertices[mVertCount + 1].UV = DirectX::XMFLOAT2(0.0f, 0.0f);
+				mVertices[mVertCount + 2].UV = DirectX::XMFLOAT2(0.0f, 0.0f);
+
+				// set UVs if we have any
+				if (iBuffer[1] != -1) {
+					mVertices[mVertCount].UV = vt[iBuffer[1]];
+					mVertices[mVertCount + 1].UV = vt[iBuffer[4]];
+					mVertices[mVertCount + 2].UV = vt[iBuffer[7]];
+				}
+
+				// set normals if we have any
+				if (iBuffer[2] != -1) {
+					mVertices[mVertCount].Normal = vn[iBuffer[2]];
+					mVertices[mVertCount + 1].Normal = vn[iBuffer[5]];
+					mVertices[mVertCount + 2].Normal = vn[iBuffer[8]];
+				}
 
 				mVertCount += 3;
 			}
