@@ -1,6 +1,6 @@
 
 template<typename T>
-inline void ConstantBuffer<T>::Create(ml::Window & wnd, T * data, ml::UInt32 dataSize, ml::Resource::Flags flags)
+inline void ml::ConstantBuffer<T>::Create(ml::Window & wnd, T * data, ml::UInt32 dataSize, ml::Resource::Flags flags)
 {
 	this->mWindow = &wnd;
 
@@ -24,49 +24,49 @@ inline void ConstantBuffer<T>::Create(ml::Window & wnd, T * data, ml::UInt32 dat
 }
 
 template<typename T>
-inline void ConstantBuffer<T>::Create(ml::Window & wnd, ml::UInt32 dataSize, ml::Resource::Flags flags)
+inline void ml::ConstantBuffer<T>::Create(ml::Window & wnd, ml::UInt32 dataSize, ml::Resource::Flags flags)
 {
 	this->Create(wnd, nullptr, dataSize, flags);
 }
 
 template<typename T>
-inline void ConstantBuffer<T>::Update(T * data)
+inline void ml::ConstantBuffer<T>::Update(T * data)
 {
 	this->mWindow->GetDeviceContext()->UpdateSubresource(this->mBuffer.Get(), 0, nullptr, data, 0, 0);
 }
 
 template<typename T>
-inline void ConstantBuffer<T>::BindVS(ml::UInt32 slot)
+inline void ml::ConstantBuffer<T>::BindVS(ml::UInt32 slot)
 {
 	this->mWindow->GetDeviceContext()->VSSetConstantBuffers(slot, 1, this->mBuffer.GetAddressOf());
 }
 
 template<typename T>
-inline void ConstantBuffer<T>::BindHS(ml::UInt32 slot)
+inline void ml::ConstantBuffer<T>::BindHS(ml::UInt32 slot)
 {
 	this->mWindow->GetDeviceContext()->HSSetConstantBuffers(slot, 1, this->mBuffer.GetAddressOf());
 }
 
 template<typename T>
-inline void ConstantBuffer<T>::BindDS(ml::UInt32 slot)
+inline void ml::ConstantBuffer<T>::BindDS(ml::UInt32 slot)
 {
 	this->mWindow->GetDeviceContext()->DSSetConstantBuffers(slot, 1, this->mBuffer.GetAddressOf());
 }
 
 template<typename T>
-inline void ConstantBuffer<T>::BindGS(ml::UInt32 slot)
+inline void ml::ConstantBuffer<T>::BindGS(ml::UInt32 slot)
 {
 	this->mWindow->GetDeviceContext()->GSSetConstantBuffers(slot, 1, this->mBuffer.GetAddressOf());
 }
 
 template<typename T>
-inline void ConstantBuffer<T>::BindPS(ml::UInt32 slot)
+inline void ml::ConstantBuffer<T>::BindPS(ml::UInt32 slot)
 {
 	this->mWindow->GetDeviceContext()->PSSetConstantBuffers(slot, 1, this->mBuffer.GetAddressOf());
 }
 
 template<typename T>
-inline void ConstantBuffer<T>::BindCS(ml::UInt32 slot)
+inline void ml::ConstantBuffer<T>::BindCS(ml::UInt32 slot)
 {
 	this->mWindow->GetDeviceContext()->CSSetConstantBuffers(slot, 1, this->mBuffer.GetAddressOf());
 }

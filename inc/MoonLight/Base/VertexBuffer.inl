@@ -1,5 +1,5 @@
 template<typename T>
-inline void VertexBuffer<T>::Create(ml::Window& wnd, T* vert, ml::UInt32 vertCount, ml::Resource::Flags flags)
+inline void ml::VertexBuffer<T>::Create(ml::Window& wnd, T* vert, ml::UInt32 vertCount, ml::Resource::Flags flags)
 {
 	this->mWindow = &wnd;
 
@@ -23,19 +23,19 @@ inline void VertexBuffer<T>::Create(ml::Window& wnd, T* vert, ml::UInt32 vertCou
 }
 
 template<typename T>
-inline void VertexBuffer<T>::Create(ml::Window& wnd, ml::UInt32 vertCount, ml::Resource::Flags flags)
+inline void ml::VertexBuffer<T>::Create(ml::Window& wnd, ml::UInt32 vertCount, ml::Resource::Flags flags)
 {
 	this->Create(wnd, nullptr, vertCount, flags);
 }
 
 template<typename T>
-inline void VertexBuffer<T>::Update(T* verts)
+inline void ml::VertexBuffer<T>::Update(T* verts)
 {
 	this->mWindow->GetDeviceContext()->UpdateSubresource(this->mBuffer.Get(), 0, nullptr, verts, 0, 0);
 }
 
 template<typename T>
-inline void VertexBuffer<T>::Bind(ml::UInt32 slot)
+inline void ml::VertexBuffer<T>::Bind(ml::UInt32 slot)
 {
 	UINT stride = sizeof(T);
 	UINT offset = 0;

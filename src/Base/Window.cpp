@@ -466,6 +466,11 @@ namespace ml
 		mSwapChain->Present(mVSync, 0);
 	}
 
+	void Window::Compute(UInt32 x, UInt32 y, UInt32 z)
+	{
+		mContext->Dispatch(x, y, z);
+	}
+
 	void Window::RemoveRasterizerState()
 	{
 		mContext->RSSetState(nullptr);
@@ -479,6 +484,12 @@ namespace ml
 	void Window::RemoveGeometryShader()
 	{
 		mContext->GSSetShader(nullptr, nullptr, 0);
+	}
+
+	void Window::RemoveUnorderedAccess(UInt32 slot)
+	{
+		ID3D11UnorderedAccessView* UAV_NULL = NULL;
+		mContext->CSSetUnorderedAccessViews(slot, 1, &UAV_NULL, 0);
 	}
 
 	void Window::RemoveBlendState()

@@ -4,6 +4,7 @@
 #include <MoonLight/Base/VertexShader.h>
 #include <MoonLight/Base/VertexBuffer.h>
 #include <MoonLight/Base/GeometryShader.h>
+#include <MoonLight/Base/ComputeShader.h>
 #include <MoonLight/Base/ConstantBuffer.h>
 #include <MoonLight/Base/RasterizerState.h>
 #include <MoonLight/Base/DepthStencilState.h>
@@ -11,34 +12,42 @@
 #include <MoonLight/Base/Image.h>
 #include <MoonLight/Base/Texture.h>
 #include <MoonLight/Base/ShaderResourceView.h>
+#include <MoonLight/Base/UnorderedAccessView.h>
 #include <MoonLight/Base/SamplerState.h>
 #include <MoonLight/Model/OBJModel.h>
 #include "../Common/Camera.h"
+#include <time.h>
+
+#define THREADS_PER_GROUP 64
+#define PARTICLE_COUNT 4096
+#define FIELD_HEIGHT 10
+#define FIELD_WIDTH 11
+#define FIELD_DEPTH 11
+
+struct MyVertex
+{
+	DirectX::XMFLOAT3 Position;
+};
 
 __declspec(align(16))
 struct ConstantBufferWVP
 {
 	DirectX::XMFLOAT4X4 matVP;
 	DirectX::XMFLOAT4X4 matWorld;
-	float ApplyVP;
-};
-
-__declspec(align(16))
-struct ConstantBufferCamera
-{
-	DirectX::XMFLOAT3 viewPos;
+	DirectX::XMFLOAT3 viewPosition;
 };
 
 int main()
 {
+	srand(time(NULL));
+
 	// create engine
 	ml::Window wnd;
-	wnd.Create(DirectX::XMINT2(800, 600), "Billboard", ml::Window::Style::Resizable);
+	wnd.Create(DirectX::XMINT2(800, 600), "Particles", ml::Window::Style::Resizable);
 
 	// describe our vertex data
 	ml::VertexInputLayout vertexInfo;
 	vertexInfo.Add("POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0);
-	vertexInfo.Add("NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 12);
 
 	// load pixel shader
 	ml::PixelShader pxShader;
@@ -53,65 +62,64 @@ int main()
 	ml::GeometryShader geoShader;
 	geoShader.LoadFromFile(wnd, "geometry.hlsl", "main");
 
-	// load model
-	ml::OBJModel obj;
-	obj.LoadFromFile("elements.obj");
+	// load compute shader
+	ml::ComputeShader computeShader;
+	computeShader.LoadFromFile(wnd, "compute.hlsl", "main");
+
+	// generate vertices
+	std::vector<MyVertex> myVerts(PARTICLE_COUNT);
+	for (int i = 0; i < PARTICLE_COUNT; i++)
+		myVerts[i].Position = DirectX::XMFLOAT3(
+			(((rand() % PARTICLE_COUNT) / (float)PARTICLE_COUNT) * FIELD_WIDTH) - FIELD_WIDTH / 2,
+			0,
+			(((rand() % PARTICLE_COUNT) / (float)PARTICLE_COUNT) * FIELD_DEPTH) - FIELD_DEPTH / 2
+		);
 
 	// create vertex buffer
-	ml::VertexBuffer<ml::OBJModel::Vertex> vertBuffer;
-	vertBuffer.Create(wnd, obj.GetVertexData(), obj.GetVertexCount(), ml::Resource::Immutable);
+	ml::VertexBuffer<MyVertex> vertBuffer;
+	vertBuffer.Create(wnd, myVerts.data(), PARTICLE_COUNT, ml::Resource::UnorderedAccess | ml::Resource::RawBufferView);
+
+	// create UAV
+	ml::UnorderedAccessView vertUAV;
+	vertUAV.Create(wnd, vertBuffer);
+	vertUAV.Bind();
 
 	// create constant buffer
-	ConstantBufferWVP cbDataWVP;
+	ConstantBufferWVP cbWVPData;
 	ml::ConstantBuffer<ConstantBufferWVP> cbWVP;
-	cbWVP.Create(wnd, &cbDataWVP, sizeof(cbDataWVP));
+	cbWVP.Create(wnd, &cbWVPData, sizeof(cbWVPData));
 
 	// bind constant buffer
-	cbWVP.BindVS();
 	cbWVP.BindGS();
-	cbWVP.BindPS();
-
+	
 	// camera
 	mv::Camera cam;
-	cam.SetDistance(10);
-	cam.RotateY(-80);
-	cam.RotateX(-90);
+	cam.SetDistance(20);
 	bool mousePressed = false;
 	DirectX::XMINT2 mouseContact(0, 0);
-
-	// create constant buffer for camera
-	ConstantBufferCamera cbCameraData;
-	ml::ConstantBuffer<ConstantBufferCamera> cbCamera;
-	cbCamera.Create(wnd, &cbCameraData, sizeof(cbCameraData));
-	cbCamera.BindGS(1);
 
 	// update constant buffer
 	DirectX::XMMATRIX world = DirectX::XMMatrixIdentity();
 	DirectX::XMMATRIX view = cam.GetMatrix();
 	DirectX::XMMATRIX proj = DirectX::XMMatrixPerspectiveFovLH(DirectX::XMConvertToRadians(45), wnd.GetAspectRatio(), 0.1f, 1000.0f);
 
-	DirectX::XMStoreFloat4x4(&cbDataWVP.matVP, XMMatrixTranspose(view * proj));
-	DirectX::XMStoreFloat4x4(&cbDataWVP.matWorld, XMMatrixTranspose(world));
-	cbWVP.Update(&cbDataWVP);
+	DirectX::XMStoreFloat4x4(&cbWVPData.matVP, XMMatrixTranspose(view * proj));
+	DirectX::XMStoreFloat4x4(&cbWVPData.matWorld, XMMatrixTranspose(world));
+	DirectX::XMStoreFloat3(&cbWVPData.viewPosition, cam.GetPosition());
+	cbWVP.Update(&cbWVPData);
 
-	// blend state for rendering billboards
+	// blend state for rendering billboards/snowflakes
 	ml::BlendState alphaBS;
 	alphaBS.Info.AlphaToCoverageEnable = true;
 	alphaBS.Create(wnd);
 	alphaBS.Bind();
 
-	// rasterizer state - turn off culling
-	ml::RasterizerState rasterizer;
-	rasterizer.Info.CullMode = D3D11_CULL_NONE;
-	rasterizer.Create(wnd);
-	rasterizer.Bind();
-
-	// load billboard texture
+	// load snowflake texture
 	ml::Image img;
 	ml::Texture tex;
 	ml::ShaderResourceView srv;
 
-	img.LoadFromFile("billboard.png");
+	img.LoadFromFile("snowflake.png");
 	tex.Create(wnd, img);
 	srv.Create(wnd, tex);
 	srv.BindPS();
@@ -120,6 +128,11 @@ int main()
 	ml::SamplerState smp;
 	smp.Create(wnd);
 	smp.BindPS();
+
+	ml::RasterizerState rs;
+	rs.Info.CullMode = D3D11_CULL_NONE;
+	rs.Create(wnd);
+	rs.Bind();
 
 	ml::Event e;
 	while (wnd.IsOpen()) {
@@ -130,10 +143,6 @@ int main()
 
 				// get the updated matrix
 				view = cam.GetMatrix();
-
-				// update constant buffer
-				DirectX::XMStoreFloat4x4(&cbDataWVP.matVP, DirectX::XMMatrixTranspose(view * proj));
-				cbWVP.Update(&cbDataWVP);
 			} else if (e.Type == ml::EventType::MouseButtonPress) {
 				mousePressed = true;
 				mouseContact = e.MouseButton.Position;
@@ -153,56 +162,46 @@ int main()
 
 					// get the updated view matrix
 					view = cam.GetMatrix();
-
-					// update constant buffer
-					DirectX::XMStoreFloat4x4(&cbDataWVP.matVP, DirectX::XMMatrixTranspose(view * proj));
-					cbWVP.Update(&cbDataWVP);
 				}
 			} else if (e.Type == ml::EventType::WindowResize) {
 				proj = DirectX::XMMatrixPerspectiveFovLH(DirectX::XMConvertToRadians(45), wnd.GetAspectRatio(), 0.1f, 1000.0f);
-
-				// update constant buffer
-				DirectX::XMStoreFloat4x4(&cbDataWVP.matVP, DirectX::XMMatrixTranspose(view * proj));
-				cbWVP.Update(&cbDataWVP);
 			} else if (e.Type == ml::EventType::MouseButtonRelease)
 				mousePressed = false;
 		}
 
-		// update cbCamera
-		DirectX::XMStoreFloat3(&cbCameraData.viewPos, cam.GetPosition());
-		cbCamera.Update(&cbCameraData);
+		UINT removeStride = 0;
+		UINT reserved = 0;
+		ID3D11Buffer* buff = NULL;
+		wnd.GetDeviceContext()->IASetVertexBuffers(0, 1, &buff, &removeStride, &reserved);
+		vertUAV.Bind();
+		computeShader.Bind();
+		wnd.Compute(PARTICLE_COUNT / THREADS_PER_GROUP, 1, 1); // the dimensions are not important
+		wnd.RemoveUnorderedAccess(0);
+
+		// update the constant buffer every frame
+		DirectX::XMStoreFloat4x4(&cbWVPData.matVP, DirectX::XMMatrixTranspose(view * proj));
+		DirectX::XMStoreFloat4x4(&cbWVPData.matWorld, DirectX::XMMatrixTranspose(world));
+		DirectX::XMStoreFloat3(&cbWVPData.viewPosition, cam.GetPosition());
+		cbWVP.Update(&cbWVPData);
 
 		// clear back buffer and depth and stencil buffer
 		wnd.Clear();
 		wnd.ClearDepthStencil(1.0f, 0);
 
 		// set topology and input signature
-		wnd.SetTopology(ml::Topology::TriangleList);
+		wnd.SetTopology(ml::Topology::PointList);
 		wnd.SetInputLayout(vertexInfo);
 
-		// set shaders
-		pxShader.Bind();
+		// bind the shaders
 		vertShader.Bind();
+		geoShader.Bind();
+		pxShader.Bind();
 
-		// bind data to shaders
+		// bind the vertex buffer
 		vertBuffer.Bind();
 
-		// we should apply the view-projection matrix for the ground
-		cbDataWVP.ApplyVP = 0.0f;
-		cbWVP.Update(&cbDataWVP);
-
 		// render the ground
-		wnd.Draw(obj.GetObjectVertexCount("ground"), obj.GetObjectVertexStart("ground"));
-
-		// we should not apply the view-projection matrix for the points in the vertex shader
-		cbDataWVP.ApplyVP = 1.0f;
-		cbWVP.Update(&cbDataWVP);
-
-		// draw the billboards
-		wnd.SetTopology(ml::Topology::PointList);
-		geoShader.Bind();
-		wnd.Draw(obj.GetObjectVertexCount("points"), obj.GetObjectVertexStart("points"));
-		wnd.RemoveGeometryShader();
+		wnd.Draw(PARTICLE_COUNT);
 
 		// render everything
 		wnd.Render();

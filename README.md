@@ -7,10 +7,11 @@ Simple Direct3D 11 wrapper.
 - [ ] Viewport
 - [ ] StructuredBuffer<T\>, Buffer<T\>, Consume/AppendStructuredBuffer
 - [ ] UnorderedAccessView + ShaderResourceView (*RW*Texture2D, *RW*StructuredBuffer, *RW*Buffer)
-- [ ] ComputeShader
+- [x] ComputeShader
 - [x] ml\::Texture, ml::Image
 - [ ] assert(mWnd != nullptr)
-- [ ] multiple file formats (support .dds)
+- [x] multiple file formats (support .dds)
+- [ ] Texture arrays
 - [ ] ml::Logger & check for HRESULTs
 - [ ] convert ml\::Resource::CPUAccess parameters to UInt8 so that bitwise operators can be used
 - [ ] make Shader class implement LoadFromFile which calls LoadFromMemory

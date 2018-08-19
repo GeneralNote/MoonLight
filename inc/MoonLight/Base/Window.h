@@ -99,11 +99,15 @@ namespace ml
 		// display back buffer
 		void Render();
 
+		// execute compute shader
+		void Compute(UInt32 x, UInt32 y, UInt32 z);
+
 		// reset some states
 		void RemoveBlendState();
 		void RemoveRasterizerState();
 		void RemoveDepthStencilState();
 		void RemoveGeometryShader();
+		void RemoveUnorderedAccess(UInt32 slot = 0);
 
 		// win32 and D3D stuff - only access from "Base" directory please
 		inline HWND GetWindowHandle() { return mWnd; }

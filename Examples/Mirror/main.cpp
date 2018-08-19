@@ -10,12 +10,6 @@
 #include <MoonLight/Model/OBJModel.h>
 #include "../Common/Camera.h"
 
-struct MyVertex
-{
-	DirectX::XMFLOAT3 Position;
-	DirectX::XMFLOAT2 UV;
-};
-
 __declspec(align(16))
 struct ConstantBufferWVP
 {

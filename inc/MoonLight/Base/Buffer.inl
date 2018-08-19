@@ -1,5 +1,5 @@
 template<typename T>
-inline Buffer<T>::Buffer()
+inline ml::Buffer<T>::Buffer()
 {
 	mWindow = nullptr;
 	mBuffer = nullptr;

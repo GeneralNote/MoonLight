@@ -157,11 +157,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Examples\Billboard\main.cpp" />
     <ClCompile Include="Examples\Common\Camera.cpp" />
+    <ClCompile Include="Examples\Snow\main.cpp" />
     <ClCompile Include="src\Base\BlendState.cpp" />
     <ClCompile Include="src\Base\Bounds.cpp" />
     <ClCompile Include="src\Base\Color.cpp" />
+    <ClCompile Include="src\Base\ComputeShader.cpp" />
     <ClCompile Include="src\Base\DepthStencilState.cpp" />
     <ClCompile Include="src\Base\GeometryShader.cpp" />
     <ClCompile Include="src\Base\Image.cpp" />
@@ -171,6 +172,7 @@
     <ClCompile Include="src\Base\ShaderResourceView.cpp" />
     <ClCompile Include="src\Base\Texture.cpp" />
     <ClCompile Include="src\Base\Timer.cpp" />
+    <ClCompile Include="src\Base\UnorderedAccessView.cpp" />
     <ClCompile Include="src\Model\Model.cpp" />
     <ClCompile Include="src\Base\VertexInputLayout.cpp" />
     <ClCompile Include="src\Base\Math.cpp" />
@@ -186,6 +188,7 @@
     <ClInclude Include="inc\MoonLight\Base\Bounds.h" />
     <ClInclude Include="inc\MoonLight\Base\Buffer.h" />
     <ClInclude Include="inc\MoonLight\Base\Color.h" />
+    <ClInclude Include="inc\MoonLight\Base\ComputeShader.h" />
     <ClInclude Include="inc\MoonLight\Base\DepthStencilState.h" />
     <ClInclude Include="inc\MoonLight\Base\GeometryShader.h" />
     <ClInclude Include="inc\MoonLight\Base\RasterizerState.h" />
@@ -195,6 +198,7 @@
     <ClInclude Include="inc\MoonLight\Base\Texture.h" />
     <ClInclude Include="inc\MoonLight\Base\Timer.h" />
     <ClInclude Include="inc\MoonLight\Base\Topology.h" />
+    <ClInclude Include="inc\MoonLight\Base\UnorderedAccessView.h" />
     <ClInclude Include="inc\MoonLight\Base\VertexInputLayout.h" />
     <ClInclude Include="inc\MoonLight\Base\PixelShader.h" />
     <ClInclude Include="inc\MoonLight\Base\Ptr.h" />
@@ -218,6 +222,8 @@
   <ItemGroup>
     <None Include="inc\MoonLight\Base\Buffer.inl" />
     <None Include="inc\MoonLight\Base\ConstantBuffer.inl" />
+    <None Include="inc\MoonLight\Base\ShaderResourceView.inl" />
+    <None Include="inc\MoonLight\Base\UnorderedAccessView.inl" />
     <None Include="inc\MoonLight\Base\VertexBuffer.inl" />
     <None Include="README.md" />
   </ItemGroup>
