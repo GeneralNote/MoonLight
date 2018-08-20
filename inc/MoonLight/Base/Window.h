@@ -107,6 +107,7 @@ namespace ml
 		void RemoveRasterizerState();
 		void RemoveDepthStencilState();
 		void RemoveGeometryShader();
+		void RemoveComputeShader();
 		void RemoveUnorderedAccess(UInt32 slot = 0);
 
 		// win32 and D3D stuff - only access from "Base" directory please

@@ -12,7 +12,7 @@ namespace ml
 		bool Create(ml::Window& wnd, ml::Texture& tex);
 
 		template<typename T>
-		bool Create(ml::Window& wnd, ml::Buffer<T>& buffer);
+		bool Create(ml::Window& wnd, ml::Buffer<T>& buffer, DXGI_FORMAT fmt = DXGI_FORMAT_UNKNOWN);
 
 		void BindVS(ml::UInt32 slot = 0);
 		void BindGS(ml::UInt32 slot = 0);

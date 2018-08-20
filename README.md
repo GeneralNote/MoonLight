@@ -5,13 +5,14 @@ Simple Direct3D 11 wrapper.
 ## TODO:
 - [x] ml::Timer
 - [ ] Viewport
-- [ ] StructuredBuffer<T\>, Buffer<T\>, Consume/AppendStructuredBuffer
-- [ ] UnorderedAccessView + ShaderResourceView (*RW*Texture2D, *RW*StructuredBuffer, *RW*Buffer)
+- [x] StructuredBuffer<T\>, Buffer<T\>
+- [x] UnorderedAccessView + ShaderResourceView (*RW*Texture2D, *RW*StructuredBuffer, *RW*Buffer)
 - [x] ComputeShader
 - [x] ml\::Texture, ml::Image
 - [ ] assert(mWnd != nullptr)
 - [x] multiple file formats (support .dds)
 - [ ] Texture arrays
+- [ ] Map() and Unmap() for ID3D11Resource
 - [ ] ml::Logger & check for HRESULTs
 - [ ] convert ml\::Resource::CPUAccess parameters to UInt8 so that bitwise operators can be used
 - [ ] make Shader class implement LoadFromFile which calls LoadFromMemory
@@ -20,3 +21,4 @@ Simple Direct3D 11 wrapper.
 - [ ] shader include handler - handles #include statements in loaded .hlsl files ( ml::ShaderIncludeHandler )
 - [ ] shader macro definitions ( ml::ShaderMacro sMacros; sMacros.Add("QUALITY", "1+4"); shader.SetMacros(sMacros); )
 - [ ] vertex buffer input slots ( ml::VertexBufferBatch batch; batch.Add(positionBuffer); batch.Add(normalBuffer); batch.Bind(); )
+- [ ] better and more attractive compute shader example

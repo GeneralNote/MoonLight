@@ -486,6 +486,11 @@ namespace ml
 		mContext->GSSetShader(nullptr, nullptr, 0);
 	}
 
+	void Window::RemoveComputeShader()
+	{
+		mContext->CSSetShader(nullptr, nullptr, 0);
+	}
+
 	void Window::RemoveUnorderedAccess(UInt32 slot)
 	{
 		ID3D11UnorderedAccessView* UAV_NULL = NULL;

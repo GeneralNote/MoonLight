@@ -1,5 +1,5 @@
 template<typename T>
-inline bool ml::UnorderedAccessView::Create(ml::Window & wnd, ml::Buffer<T>& buffer)
+inline bool ml::UnorderedAccessView::Create(ml::Window & wnd, ml::Buffer<T>& buffer, DXGI_FORMAT fmt)
 {
 	mView.Reset();
 
@@ -9,7 +9,7 @@ inline bool ml::UnorderedAccessView::Create(ml::Window & wnd, ml::Buffer<T>& buf
 	bool isRawView = bufDesc.MiscFlags & D3D11_RESOURCE_MISC_BUFFER_ALLOW_RAW_VIEWS;
 
 	D3D11_UNORDERED_ACCESS_VIEW_DESC uavDesc;
-	uavDesc.Format = (DXGI_FORMAT)((DXGI_FORMAT_UNKNOWN * !isRawView) + (DXGI_FORMAT_R32_TYPELESS * isRawView));
+	uavDesc.Format = (DXGI_FORMAT)((fmt * !isRawView) + (DXGI_FORMAT_R32_TYPELESS * isRawView));
 	uavDesc.ViewDimension = D3D11_UAV_DIMENSION_BUFFER;
 	uavDesc.Buffer.Flags = D3D11_BUFFER_UAV_FLAG_RAW * isRawView;
 	uavDesc.Buffer.FirstElement = 0;
