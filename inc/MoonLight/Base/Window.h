@@ -88,7 +88,7 @@ namespace ml
 		void ClearStencil(ml::UInt8 value);
 
 		// set primitive topology
-		void SetTopology(ml::Topology topology);
+		void SetTopology(ml::UInt32 topology);
 
 		// set id3d11inputlayout
 		void SetInputLayout(ml::VertexInputLayout& inputLayout);

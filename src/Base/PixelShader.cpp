@@ -38,8 +38,7 @@ namespace ml
 				printf("[D3D] Failed to create pixel shader.\n");
 				return false;
 			}
-		}
-		else {
+		} else {
 			// create shader object
 			HRESULT hr = wnd.GetDevice()->CreatePixelShader(code, codeLen, nullptr, (ID3D11PixelShader**)&mShader);
 			if (FAILED(hr)) {

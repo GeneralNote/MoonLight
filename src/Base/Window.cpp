@@ -446,7 +446,7 @@ namespace ml
 		mContext->ClearDepthStencilView(mDepthView.Get(), D3D11_CLEAR_STENCIL, 1.0f, value);
 	}
 
-	void Window::SetTopology(ml::Topology topology)
+	void Window::SetTopology(ml::UInt32 topology)
 	{
 		mContext->IASetPrimitiveTopology((D3D11_PRIMITIVE_TOPOLOGY)topology);
 	}
