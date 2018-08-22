@@ -13,6 +13,8 @@ namespace ml
 	}
 	void UnorderedAccessView::Bind(ml::UInt32 slot)
 	{
+		assert(mWnd != nullptr);
+
 		mWnd->GetDeviceContext()->CSSetUnorderedAccessViews(slot, 1, mView.GetAddressOf(), nullptr);
 	}
 }

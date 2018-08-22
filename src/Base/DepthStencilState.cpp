@@ -29,6 +29,8 @@ namespace ml
 	}
 	void DepthStencilState::Bind(ml::UInt32 stencilRef)
 	{
+		assert(mWnd != nullptr);
+
 		mWnd->GetDeviceContext()->OMSetDepthStencilState(mState.Get(), stencilRef);
 	}
 }

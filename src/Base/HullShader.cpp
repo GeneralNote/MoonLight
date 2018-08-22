@@ -51,6 +51,8 @@ namespace ml
 	}
 	void HullShader::Bind()
 	{
+		assert(mWindow != nullptr);
+
 		mWindow->GetDeviceContext()->HSSetShader((ID3D11HullShader*)mShader, nullptr, 0);
 	}
 }

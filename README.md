@@ -9,7 +9,7 @@ Simple Direct3D 11 wrapper.
 - [x] UnorderedAccessView + ShaderResourceView (*RW*Texture2D, *RW*StructuredBuffer, *RW*Buffer)
 - [x] ComputeShader
 - [x] ml\::Texture, ml::Image
-- [ ] assert(mWnd != nullptr)
+- [x] assert(mWnd != nullptr)
 - [x] multiple file formats (support .dds)
 - [ ] Texture arrays
 - [ ] Map() and Unmap() for ID3D11Resource (implement IResource)
@@ -27,3 +27,5 @@ Simple Direct3D 11 wrapper.
 - [ ] vertex buffer input slots ( ml::VertexBufferBatch batch; batch.Add(positionBuffer); batch.Add(normalBuffer); batch.Bind(); )
 - [ ] better and more attractive compute shader example
 - [ ] ml::Renderer -> ml\::WindowRenderer implements ID3D11DeviceContext, ml\::ThreadedRenderer implements ID3D11DefferedContext -> BindVS(myRenderer, slotNumber)
+- [ ] rename ml\::Topology into ml\::PrimitiveType
+- [ ] change style from mName to m_name

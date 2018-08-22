@@ -26,26 +26,38 @@ namespace ml
 	}
 	void SamplerState::BindVS(ml::UInt32 slot)
 	{
+		assert(mWnd != nullptr);
+
 		mWnd->GetDeviceContext()->VSSetSamplers(slot, 1, mSampler.GetAddressOf());
 	}
 	void SamplerState::BindGS(ml::UInt32 slot)
 	{
+		assert(mWnd != nullptr);
+
 		mWnd->GetDeviceContext()->GSSetSamplers(slot, 1, mSampler.GetAddressOf());
 	}
 	void SamplerState::BindHS(ml::UInt32 slot)
 	{
+		assert(mWnd != nullptr);
+
 		mWnd->GetDeviceContext()->HSSetSamplers(slot, 1, mSampler.GetAddressOf());
 	}
 	void SamplerState::BindDS(ml::UInt32 slot)
 	{
+		assert(mWnd != nullptr);
+
 		mWnd->GetDeviceContext()->DSSetSamplers(slot, 1, mSampler.GetAddressOf());
 	}
 	void SamplerState::BindPS(ml::UInt32 slot)
 	{
+		assert(mWnd != nullptr);
+
 		mWnd->GetDeviceContext()->PSSetSamplers(slot, 1, mSampler.GetAddressOf());
 	}
 	void SamplerState::BindCS(ml::UInt32 slot)
 	{
+		assert(mWnd != nullptr);
+
 		mWnd->GetDeviceContext()->CSSetSamplers(slot, 1, mSampler.GetAddressOf());
 	}
 }

@@ -36,6 +36,8 @@ namespace ml
 	}
 	void BlendState::Bind(ml::UInt32 sampleMask)
 	{
+		assert(mWnd != nullptr);
+
 		mWnd->GetDeviceContext()->OMSetBlendState(mBlend.Get(), mBlendFactor, sampleMask);
 	}
 }

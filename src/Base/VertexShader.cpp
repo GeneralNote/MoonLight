@@ -63,6 +63,8 @@ namespace ml
 	}
 	void VertexShader::Bind()
 	{
+		assert(mWindow != nullptr);
+
 		mWindow->GetDeviceContext()->VSSetShader((ID3D11VertexShader*)mShader, nullptr, 0);
 	}
 	void VertexShader::mCreateInputSignature(ml::Window& wnd, const char* bc, ml::UInt32 bcLen)

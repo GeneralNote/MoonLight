@@ -51,6 +51,8 @@ namespace ml
 	}
 	void DomainShader::Bind()
 	{
+		assert(mWindow != nullptr);
+
 		mWindow->GetDeviceContext()->DSSetShader((ID3D11DomainShader*)mShader, nullptr, 0);
 	}
 }

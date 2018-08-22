@@ -51,6 +51,8 @@ namespace ml
 	}
 	void GeometryShader::Bind()
 	{
+		assert(mWindow != nullptr);
+
 		mWindow->GetDeviceContext()->GSSetShader((ID3D11GeometryShader*)mShader, nullptr, 0);
 	}
 }

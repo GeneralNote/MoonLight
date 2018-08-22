@@ -25,6 +25,8 @@ namespace ml
 	}
 	void RasterizerState::Bind()
 	{
+		assert(mWnd != nullptr);
+
 		mWnd->GetDeviceContext()->RSSetState(mRasterizer.Get());
 	}
 }

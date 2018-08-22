@@ -51,6 +51,8 @@ namespace ml
 	}
 	void PixelShader::Bind()
 	{
+		assert(mWindow != nullptr);
+
 		mWindow->GetDeviceContext()->PSSetShader((ID3D11PixelShader*)mShader, nullptr, 0);
 	}
 }
