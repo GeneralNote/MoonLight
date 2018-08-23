@@ -4,6 +4,7 @@
 #include <MoonLight/Base/VertexShader.h>
 #include <MoonLight/Base/VertexBuffer.h>
 #include <MoonLight/Base/ConstantBuffer.h>
+#include <MoonLight/Base/Viewport.h>
 
 
 struct MyVertex
@@ -16,19 +17,14 @@ __declspec(align(16))
 struct ConstantBufferWVP
 {
 	DirectX::XMFLOAT4X4 matWVP;
+	int Viewport;
 };
 
 int main()
 {
-	// window configuration
-	ml::Window::Config wndConfig;
-	wndConfig.Fullscreen = false;
-	wndConfig.Sample.Count = 1;
-	wndConfig.Sample.Quality = 0;
-
 	// create engine
 	ml::Window wnd;
-	wnd.Create(DirectX::XMINT2(800, 600), "Test project!", ml::Window::Style::Resizable, wndConfig);
+	wnd.Create(DirectX::XMINT2(800, 600), "Test project!", ml::Window::Style::Default);
 
 	// simple engine and window property changes
 	wnd.SetClearColor(ml::Color(0, 255, 0));
@@ -65,16 +61,29 @@ int main()
 	ml::ConstantBuffer<ConstantBufferWVP> cbWVP;
 	cbWVP.Create(wnd, &cbDataWVP, sizeof(cbDataWVP));
 
+	// create viewports
+	ml::Viewport views;
+	views.X[0] = 0;
+	views.Y[0] = 0;
+	views.Width[0] = wnd.GetSize().x / 2;
+	views.Height[0] = wnd.GetSize().y;
+	views.X[1] = views.Width[0];
+	views.Y[1] = 0;
+	views.Width[1] = wnd.GetSize().x / 2;
+	views.Height[1] = wnd.GetSize().y;
+	views.Bind(wnd, 2);
+
 	ml::Event e;
 	while (wnd.IsOpen()) {
-		while (wnd.GetEvent(e)) { }
+		while (wnd.GetEvent(e)) {
+			if (e.Type == ml::EventType::WindowResize)
+				views.Bind(wnd, 2);
+		}
 
-		// update constant buffer
 		DirectX::XMMATRIX wvp = DirectX::XMMatrixRotationY(DirectX::XMConvertToRadians(45)) * DirectX::XMMatrixTranslation(0, 0, 7);
-		wvp = wvp * DirectX::XMMatrixPerspectiveFovLH(DirectX::XMConvertToRadians(45), wnd.GetAspectRatio(), 0.1f, 1000.0f);
+		wvp = wvp * DirectX::XMMatrixPerspectiveFovLH(DirectX::XMConvertToRadians(45), (float)wnd.GetSize().x/2/wnd.GetSize().y, 0.1f, 1000.0f);
 		DirectX::XMStoreFloat4x4(&cbDataWVP.matWVP, XMMatrixTranspose(wvp));
-		cbWVP.Update(&cbDataWVP);
-
+		
 		// clear back buffer and depth and stencil buffer
 		wnd.Clear();
 		wnd.ClearDepthStencil(1.0f, 0);
@@ -90,7 +99,20 @@ int main()
 		// bind data to shaders
 		cbWVP.BindVS();
 		vertBuffer.Bind();
-		
+
+		// update constant buffer
+		cbDataWVP.Viewport = 0;
+		cbWVP.Update(&cbDataWVP);
+
+		// render vertex buffer
+		wnd.Draw(verts.size());
+
+		/* RENDER TO A SECOND VIEW */
+
+		// update constant buffer
+		cbDataWVP.Viewport = 1;
+		cbWVP.Update(&cbDataWVP);
+
 		// render vertex buffer
 		wnd.Draw(verts.size());
 

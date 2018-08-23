@@ -15,7 +15,7 @@ Simple Direct3D 11 wrapper.
 - [ ] Map() and Unmap() for ID3D11Resource (implement IResource)
 - [ ] Buffer\<T\> - some methods are inline and they shouldnt be (and the other way around)
 - [ ] ml::Logger & check for HRESULTs
-- [ ] RenderTexture
+- [ ] ml::RenderTexture
 - [ ] ml::ShaderVersion
 - [ ] ml::GeometryGenerator -> create spheres, planes, cubes, etc... at run time
 - [x] convert ml\::Resource::CPUAccess parameters to UInt8 so that bitwise operators can be used
@@ -29,3 +29,5 @@ Simple Direct3D 11 wrapper.
 - [ ] ml::Renderer -> ml\::WindowRenderer implements ID3D11DeviceContext, ml\::ThreadedRenderer implements ID3D11DefferedContext -> BindVS(myRenderer, slotNumber)
 - [ ] rename ml\::Topology into ml\::PrimitiveType
 - [ ] change style from mName to m_name
+- [ ] universal header: #inclued <MoonLight.hpp>
+- [ ] IndexBuffer + example
