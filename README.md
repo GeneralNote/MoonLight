@@ -4,7 +4,7 @@ Simple Direct3D 11 wrapper.
 
 ## TODO:
 - [x] ml::Timer
-- [ ] Viewport
+- [x] Viewport
 - [x] StructuredBuffer<T\>, Buffer<T\>
 - [x] UnorderedAccessView + ShaderResourceView (*RW*Texture2D, *RW*StructuredBuffer, *RW*Buffer)
 - [x] ComputeShader
@@ -12,8 +12,7 @@ Simple Direct3D 11 wrapper.
 - [x] assert(mWnd != nullptr)
 - [x] multiple file formats (support .dds)
 - [ ] Texture arrays
-- [ ] Map() and Unmap() for ID3D11Resource (implement IResource)
-- [ ] Buffer\<T\> - some methods are inline and they shouldnt be (and the other way around)
+- [x] Map() and Unmap() for ID3D11Resource (implement IResource)
 - [ ] ml::Logger & check for HRESULTs
 - [ ] ml::RenderTexture
 - [ ] ml::ShaderVersion

@@ -4,7 +4,9 @@ namespace ml
 {
 	bool Texture::Create(ml::Window& wnd, ml::Image & img, ml::Resource::Flags flags)
 	{
-		mTexture.Reset();
+		this->SetOwner(wnd);
+
+		mResource.Reset();
 
 		// parse the flags
 		UInt32 usage, bind, access, misc;
@@ -13,7 +15,7 @@ namespace ml
 		// create texture
 		HRESULT hr = DirectX::CreateTextureEx(wnd.GetDevice(), img.GetImage()->GetImages(),
 			img.GetImage()->GetImageCount(), img.GetImage()->GetMetadata(), (D3D11_USAGE)usage, bind, access,
-			misc, false, reinterpret_cast<ID3D11Resource**>(mTexture.GetAddressOf()));
+			misc, false, mResource.GetAddressOf());
 		
 		return !FAILED(hr);
 	}

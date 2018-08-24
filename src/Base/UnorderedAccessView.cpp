@@ -6,7 +6,7 @@ namespace ml
 	{
 		mView.Reset();
 
-		HRESULT hr = wnd.GetDevice()->CreateUnorderedAccessView(tex.GetTexture(), nullptr, mView.GetAddressOf());
+		HRESULT hr = wnd.GetDevice()->CreateUnorderedAccessView(tex.GetResource(), nullptr, mView.GetAddressOf());
 		mWnd = &wnd;
 
 		return !FAILED(hr);

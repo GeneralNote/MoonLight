@@ -6,18 +6,14 @@
 #include <MoonLight/Base/Image.h>
 #include <MoonLight/Base/Window.h>
 #include <MoonLight/Base/Resource.h>
+#include <MoonLight/Base/IResource.h>
 
 namespace ml
 {
-	class Texture
+	class Texture : public IResource
 	{
 	public:
 		bool Create(ml::Window& wnd, ml::Image& img, ml::Resource::Flags flags = ml::Resource::ShaderResource);
-
-		inline ID3D11Texture2D* GetTexture() { return mTexture.Get(); }
-
-	private:
-		ml::Ptr<ID3D11Texture2D> mTexture;
 	};
 }
 

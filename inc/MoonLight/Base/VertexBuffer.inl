@@ -1,7 +1,7 @@
 template<typename T>
 inline void ml::VertexBuffer<T>::Create(ml::Window& wnd, T* vert, ml::UInt32 vertCount, ml::Resource::Flags flags)
 {
-	this->mWindow = &wnd;
+	this->SetOwner(wnd);
 
 	D3D11_BUFFER_DESC buffDesc;
 	buffDesc.ByteWidth = sizeof(T)*vertCount;
@@ -16,10 +16,10 @@ inline void ml::VertexBuffer<T>::Create(ml::Window& wnd, T* vert, ml::UInt32 ver
 		sub.SysMemPitch = 0;
 		sub.SysMemSlicePitch = 0;
 
-		wnd.GetDevice()->CreateBuffer(&buffDesc, &sub, this->mBuffer.GetAddressOf());
+		wnd.GetDevice()->CreateBuffer(&buffDesc, &sub, (ID3D11Buffer**)this->mResource.GetAddressOf());
 	}
 	else
-		wnd.GetDevice()->CreateBuffer(&buffDesc, nullptr, this->mBuffer.GetAddressOf());
+		wnd.GetDevice()->CreateBuffer(&buffDesc, nullptr, (ID3D11Buffer**)this->mResource.GetAddressOf());
 }
 
 template<typename T>
@@ -31,7 +31,7 @@ inline void ml::VertexBuffer<T>::Create(ml::Window& wnd, ml::UInt32 vertCount, m
 template<typename T>
 inline void ml::VertexBuffer<T>::Update(T* verts)
 {
-	this->mWindow->GetDeviceContext()->UpdateSubresource(this->mBuffer.Get(), 0, nullptr, verts, 0, 0);
+	this->mWindow->GetDeviceContext()->UpdateSubresource(this->mResource.Get(), 0, nullptr, verts, 0, 0);
 }
 
 template<typename T>
@@ -40,5 +40,5 @@ inline void ml::VertexBuffer<T>::Bind(ml::UInt32 slot)
 	UINT stride = sizeof(T);
 	UINT offset = 0;
 
-	this->mWindow->GetDeviceContext()->IASetVertexBuffers(slot, 1, this->mBuffer.GetAddressOf(), &stride, &offset);
+	this->mWindow->GetDeviceContext()->IASetVertexBuffers(slot, 1, (ID3D11Buffer**)this->mResource.GetAddressOf(), &stride, &offset);
 }

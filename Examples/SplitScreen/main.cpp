@@ -100,6 +100,8 @@ int main()
 		cbWVP.BindVS();
 		vertBuffer.Bind();
 
+		/* RENDER TO THE FIRST VIEW */
+
 		// update constant buffer
 		cbDataWVP.Viewport = 0;
 		cbWVP.Update(&cbDataWVP);
@@ -107,7 +109,7 @@ int main()
 		// render vertex buffer
 		wnd.Draw(verts.size());
 
-		/* RENDER TO A SECOND VIEW */
+		/* RENDER TO THE SECOND VIEW */
 
 		// update constant buffer
 		cbDataWVP.Viewport = 1;

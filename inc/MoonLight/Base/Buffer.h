@@ -2,21 +2,16 @@
 #define __MOONLIGHT_BUFFER_H__
 
 #include <MoonLight/Base/Window.h>
+#include <MoonLight/Base/IResource.h>
 #include <MoonLight/Base/Ptr.h>
 
 namespace ml
 {
 	template <typename T>
-	class Buffer
+	class Buffer : public IResource
 	{
 	public:
 		Buffer();
-
-		inline ID3D11Buffer *GetBuffer() { return mBuffer.Get(); }
-
-	protected:
-		ml::Ptr<ID3D11Buffer> mBuffer;
-		ml::Window* mWindow;
 	};
 
 #include <MoonLight/Base/Buffer.inl>
