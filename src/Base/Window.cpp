@@ -47,6 +47,17 @@ namespace ml
 		int wndX = (GetSystemMetrics(SM_CXSCREEN) - size.x) / 2;
 		int wndY = (GetSystemMetrics(SM_CYSCREEN) - size.y) / 2;
 
+		// save the size
+		mSize = size;
+
+		// client area size should be equal to the size.xy in windowed mode
+		if (!info.Fullscreen) {
+			RECT rectangle = { 0, 0, size.x, size.y };
+			AdjustWindowRect(&rectangle, winStyle, false);
+			size.x = rectangle.right - rectangle.left;
+			size.y = rectangle.bottom - rectangle.top;
+		}
+
 		// create the window
 		mWnd = CreateWindowExW(0L, Window::Name, title.c_str(), winStyle,
 							   wndX, wndY, size.x, size.y,
@@ -54,7 +65,6 @@ namespace ml
 
 		// we "opened" the window
 		mOpen = true;
-		mSize = size;
 
 
 		// D3D11 flags
@@ -161,7 +171,6 @@ namespace ml
 	{
 		RECT bounds;
 		GetClientRect(mWnd, &bounds);
-
 		return DirectX::XMINT2(bounds.right - bounds.left, bounds.bottom - bounds.top);
 	}
 

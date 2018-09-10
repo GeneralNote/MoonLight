@@ -16,7 +16,7 @@ Simple Direct3D 11 wrapper.
 - [ ] ml::Logger & check for HRESULTs
 - [ ] ml::RenderTexture
 - [ ] ml::ShaderVersion
-- [ ] ml::GeometryGenerator -> create spheres, planes, cubes, etc... at run time
+- [x] ml::GeometryGenerator -> create spheres, planes, cubes, etc... at run time
 - [x] convert ml\::Resource::CPUAccess parameters to UInt8 so that bitwise operators can be used
 - [x] make Shader class implement LoadFromFile which calls LoadFromMemory
 - [ ] set debug object names in debug mode ( SetPrivateData(WKPDID_D3DDebugObjectName) )

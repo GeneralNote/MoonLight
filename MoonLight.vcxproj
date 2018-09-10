@@ -158,7 +158,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Examples\Common\Camera.cpp" />
-    <ClCompile Include="Examples\SplitScreen\main.cpp" />
+    <ClCompile Include="Examples\Geometry\main.cpp" />
     <ClCompile Include="inc\MoonLight\Base\Topology.cpp" />
     <ClCompile Include="src\Base\BlendState.cpp" />
     <ClCompile Include="src\Base\Bounds.cpp" />
@@ -166,6 +166,8 @@
     <ClCompile Include="src\Base\ComputeShader.cpp" />
     <ClCompile Include="src\Base\DepthStencilState.cpp" />
     <ClCompile Include="src\Base\DomainShader.cpp" />
+    <ClCompile Include="src\Base\Geometry.cpp" />
+    <ClCompile Include="src\Base\GeometryFactory.cpp" />
     <ClCompile Include="src\Base\GeometryShader.cpp" />
     <ClCompile Include="src\Base\HullShader.cpp" />
     <ClCompile Include="src\Base\Image.cpp" />
@@ -196,6 +198,8 @@
     <ClInclude Include="inc\MoonLight\Base\ComputeShader.h" />
     <ClInclude Include="inc\MoonLight\Base\DepthStencilState.h" />
     <ClInclude Include="inc\MoonLight\Base\DomainShader.h" />
+    <ClInclude Include="inc\MoonLight\Base\Geometry.h" />
+    <ClInclude Include="inc\MoonLight\Base\GeometryFactory.h" />
     <ClInclude Include="inc\MoonLight\Base\GeometryShader.h" />
     <ClInclude Include="inc\MoonLight\Base\HullShader.h" />
     <ClInclude Include="inc\MoonLight\Base\IResource.h" />
