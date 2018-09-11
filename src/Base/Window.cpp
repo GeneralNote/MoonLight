@@ -1,4 +1,5 @@
 #include <MoonLight/Base/Window.h>
+#include <MoonLight/Base/RenderTexture.h>
 #include <MoonLight/Base/VertexInputLayout.h>
 #include <assert.h>
 #include <array>
@@ -84,10 +85,10 @@ namespace ml
 		DXGI_SWAP_CHAIN_DESC swapDesc = { 0 };
 		swapDesc.BufferCount = 1;
 		swapDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-		swapDesc.BufferDesc.Height = size.y;
+		swapDesc.BufferDesc.Height = mSize.y;
 		swapDesc.BufferDesc.RefreshRate.Numerator = 60;
 		swapDesc.BufferDesc.RefreshRate.Denominator = 1;
-		swapDesc.BufferDesc.Width = size.x;
+		swapDesc.BufferDesc.Width = mSize.x;
 		swapDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 		swapDesc.OutputWindow = mWnd;
 		swapDesc.SampleDesc = info.Sample;
@@ -118,11 +119,11 @@ namespace ml
 		D3D11_TEXTURE2D_DESC depthTexDesc = { 0 };
 		depthTexDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
 		depthTexDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
-		depthTexDesc.Height = size.y;
+		depthTexDesc.Height = mSize.y;
 		depthTexDesc.ArraySize = 1;
 		depthTexDesc.MipLevels = 1;
 		depthTexDesc.Usage = D3D11_USAGE_DEFAULT;
-		depthTexDesc.Width = size.x;
+		depthTexDesc.Width = mSize.x;
 		depthTexDesc.SampleDesc = info.Sample;
 
 		mDevice->CreateTexture2D(&depthTexDesc, nullptr, mDepthTexture.GetAddressOf());
@@ -136,8 +137,8 @@ namespace ml
 		// set viewport
 		D3D11_VIEWPORT view;
 		view.TopLeftX = view.TopLeftY = 0;
-		view.Width = size.x;
-		view.Height = size.y;
+		view.Width = mSize.x;
+		view.Height = mSize.y;
 		view.MaxDepth = 1.0f;
 		view.MinDepth = 0.0f;
 
@@ -417,12 +418,12 @@ namespace ml
 	void Window::Destroy()
 	{
 		// release DirectX objects
-		mDevice.Reset();
-		mContext.Reset();
-		mSwapChain.Reset();
 		mRTView.Reset();
 		mDepthTexture.Reset();
 		mDepthView.Reset();
+		mSwapChain.Reset();
+		mContext.Reset();
+		mDevice.Reset();
 
 		// destroy the window
 		if (mWnd)
@@ -440,9 +441,19 @@ namespace ml
 		mClearColor[3] = color.A * 1.0f / 255;
 	}
 
+	void Window::Bind()
+	{
+		mContext->OMSetRenderTargets(1, mRTView.GetAddressOf(), mDepthView.Get());
+	}
+
 	void Window::Clear()
 	{
 		mContext->ClearRenderTargetView(mRTView.Get(), mClearColor);
+	}
+
+	void Window::Clear(ml::RenderTexture& tex)
+	{
+		mContext->ClearRenderTargetView(tex.GetView(), mClearColor);
 	}
 
 	void Window::ClearDepthStencil(float depth, ml::UInt8 stencil)
@@ -504,6 +515,24 @@ namespace ml
 	{
 		ID3D11UnorderedAccessView* UAV_NULL = NULL;
 		mContext->CSSetUnorderedAccessViews(slot, 1, &UAV_NULL, 0);
+	}
+
+	void Window::RemoveShaderResource(UInt32 slot)
+	{
+		ID3D11ShaderResourceView* SRV_NULL = NULL;
+		mContext->PSSetShaderResources(slot, 1, &SRV_NULL);
+		mContext->VSSetShaderResources(slot, 1, &SRV_NULL);
+		mContext->CSSetShaderResources(slot, 1, &SRV_NULL);
+		mContext->GSSetShaderResources(slot, 1, &SRV_NULL);
+		mContext->HSSetShaderResources(slot, 1, &SRV_NULL);
+		mContext->DSSetShaderResources(slot, 1, &SRV_NULL);
+	}
+
+	void Window::DebugDumpDirect3DLiveObjects()
+	{
+		ml::Ptr<ID3D11Debug> debug;
+		mDevice->QueryInterface(__uuidof(ID3D11Debug), reinterpret_cast<void**>(debug.GetAddressOf()));
+		debug->ReportLiveDeviceObjects(D3D11_RLDO_DETAIL | D3D11_RLDO_IGNORE_INTERNAL);
 	}
 
 	void Window::RemoveBlendState()

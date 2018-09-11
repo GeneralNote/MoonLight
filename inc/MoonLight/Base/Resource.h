@@ -47,7 +47,7 @@ namespace ml
 			NoBind				= 0,
 			ShaderResource		= 0b00001 << 8, // the resource will be used in a shader as a read only
 			DepthStencil		= 0b00010 << 8, // the texture will be used as a depth stencil texture
-			RenderTarget		= 0b00100 << 8, // the texture will be used as a render target
+			//Reserved			= 0b00100 << 8, // NOTE: this was supposed to be the RenderTarget flag but we dont need it
 			UnorderedAccess		= 0b01000 << 8, // the resource will be used as a RW resource in compute shader
 			StreamOutput		= 0b10000 << 8  // not implemented yet
 		};

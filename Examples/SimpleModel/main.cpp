@@ -112,6 +112,11 @@ int main()
 			}
 			else if (e.Type == ml::EventType::MouseButtonRelease)
 				mousePressed = false;
+			else if (e.Type == ml::EventType::WindowResize) {
+				proj = DirectX::XMMatrixPerspectiveFovLH(DirectX::XMConvertToRadians(45), wnd.GetAspectRatio(), 0.1f, 1000.0f);
+				DirectX::XMStoreFloat4x4(&cbDataWVP.matWVP, DirectX::XMMatrixTranspose(world * view * proj));
+				cbWVP.Update(&cbDataWVP);
+			}
 		}
 
 		// clear back buffer and depth and stencil buffer

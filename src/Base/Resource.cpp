@@ -24,7 +24,6 @@ namespace ml
 
 		bind = (CHECK_BIT(parse, Bind::ShaderResource) * D3D11_BIND_SHADER_RESOURCE) |
 			(CHECK_BIT(parse, Bind::DepthStencil) * D3D11_BIND_DEPTH_STENCIL) |
-			(CHECK_BIT(parse, Bind::RenderTarget) * D3D11_BIND_RENDER_TARGET) |
 			(CHECK_BIT(parse, Bind::UnorderedAccess) * D3D11_BIND_UNORDERED_ACCESS) |
 			(CHECK_BIT(parse, Bind::StreamOutput) * D3D11_BIND_STREAM_OUTPUT);
 	}

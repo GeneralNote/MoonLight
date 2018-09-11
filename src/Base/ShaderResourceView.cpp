@@ -11,6 +11,15 @@ namespace ml
 
 		return !FAILED(hr);
 	}
+	bool ShaderResourceView::Create(ml::Window & wnd, ml::RenderTexture & tex)
+	{
+		mView.Reset();
+
+		HRESULT hr = wnd.GetDevice()->CreateShaderResourceView(tex.GetResource(), nullptr, mView.GetAddressOf());
+		mWnd = &wnd;
+
+		return !FAILED(hr);
+	}
 	void ShaderResourceView::BindVS(ml::UInt32 slot)
 	{
 		assert(mWnd != nullptr);

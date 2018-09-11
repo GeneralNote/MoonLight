@@ -14,7 +14,7 @@ Simple Direct3D 11 wrapper.
 - [ ] Texture arrays
 - [x] Map() and Unmap() for ID3D11Resource (implement IResource)
 - [ ] ml::Logger & check for HRESULTs
-- [ ] ml::RenderTexture
+- [x] ml::RenderTexture
 - [ ] ml::ShaderVersion
 - [x] ml::GeometryGenerator -> create spheres, planes, cubes, etc... at run time
 - [x] convert ml\::Resource::CPUAccess parameters to UInt8 so that bitwise operators can be used

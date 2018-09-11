@@ -13,6 +13,7 @@
 namespace ml
 {
 	class VertexInputLayout;
+	class RenderTexture;
 
 	class Window
 	{
@@ -80,8 +81,12 @@ namespace ml
 		inline ml::Color GetClearColor() { return ml::Color(255*mClearColor[0], 255*mClearColor[1], 255*mClearColor[2], 255*mClearColor[3]); }
 		void SetClearColor(ml::Color color);
 
+		// bind windows render target to rendering pipeline
+		void Bind();
+
 		// clear back buffer
 		void Clear();
+		void Clear(ml::RenderTexture& tex);
 
 		// clear depth/stencil texture
 		void ClearDepthStencil(float depth, ml::UInt8 stencil);
@@ -109,6 +114,10 @@ namespace ml
 		void RemoveGeometryShader();
 		void RemoveComputeShader();
 		void RemoveUnorderedAccess(UInt32 slot = 0);
+		void RemoveShaderResource(UInt32 slot = 0);
+
+		// [DEBUG] dump live objects
+		void DebugDumpDirect3DLiveObjects();
 
 		// win32 and D3D stuff - only access from "Base" directory please
 		inline HWND GetWindowHandle() { return mWnd; }
@@ -116,6 +125,7 @@ namespace ml
 		inline ID3D11Device* GetDevice() { return mDevice.Get(); }
 		inline ID3D11DeviceContext* GetDeviceContext() { return mContext.Get(); }
 		inline IDXGISwapChain* GetSwapChain() { return mSwapChain.Get(); }
+		inline ID3D11DepthStencilView* GetDepthStencil() { return mDepthView.Get(); }
 
 
 	private:

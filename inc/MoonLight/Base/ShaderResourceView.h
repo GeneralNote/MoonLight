@@ -3,6 +3,7 @@
 #include <MoonLight/Base/Window.h>
 #include <MoonLight/Base/Buffer.h>
 #include <MoonLight/Base/Texture.h>
+#include <MoonLight/Base/RenderTexture.h>
 
 namespace ml
 {
@@ -10,6 +11,7 @@ namespace ml
 	{
 	public:
 		bool Create(ml::Window& wnd, ml::Texture& tex);
+		bool Create(ml::Window& wnd, ml::RenderTexture& tex);
 
 		template<typename T>
 		bool Create(ml::Window& wnd, ml::Buffer<T>& buffer, DXGI_FORMAT fmt = DXGI_FORMAT_UNKNOWN);
