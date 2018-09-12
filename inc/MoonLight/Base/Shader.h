@@ -7,14 +7,27 @@
 
 namespace ml
 {
+	class ShaderMacroList
+	{
+	public:
+		ShaderMacroList();
+		~ShaderMacroList();
+
+		void Add(const std::string& name, const std::string& value);
+		inline const D3D_SHADER_MACRO* GetData() const { return mMacros.data(); }
+
+	private:
+		std::vector<D3D_SHADER_MACRO> mMacros;
+	};
+
 	class Shader
 	{
 	public:
 		Shader();
 		~Shader();
 
-		bool LoadFromFile(ml::Window& wnd, std::string filename, std::string entry, bool needsCompile = true);
-		virtual bool LoadFromMemory(ml::Window& wnd, const char* code, ml::UInt32 codeLen, std::string entry, bool needsCompile = true) = 0;
+		bool LoadFromFile(ml::Window& wnd, std::string filename, std::string entry, bool needsCompile = true, const ShaderMacroList& macros = ShaderMacroList());
+		virtual bool LoadFromMemory(ml::Window& wnd, const char* code, ml::UInt32 codeLen, std::string entry, bool needsCompile = true, const ShaderMacroList& macros = ShaderMacroList()) = 0;
 		virtual void Bind() = 0;
 
 	protected:

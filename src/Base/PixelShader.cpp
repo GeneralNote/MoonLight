@@ -3,7 +3,7 @@
 
 namespace ml
 {
-	bool PixelShader::LoadFromMemory(ml::Window& wnd, const char* code, ml::UInt32 codeLen, std::string entry, bool needsCompile)
+	bool PixelShader::LoadFromMemory(ml::Window& wnd, const char* code, ml::UInt32 codeLen, std::string entry, bool needsCompile, const ShaderMacroList& macros)
 	{
 		mWindow = &wnd;
 
@@ -23,7 +23,7 @@ namespace ml
 			ml::Ptr<ID3DBlob> outCode, outMsgs;
 
 			// compile
-			HRESULT hr = D3DCompile(code, codeLen, "PixelShader", nullptr, nullptr, entry.c_str(), "ps_5_0", flags, 0, outCode.GetAddressOf(), outMsgs.GetAddressOf());
+			HRESULT hr = D3DCompile(code, codeLen, "PixelShader", macros.GetData(), nullptr, entry.c_str(), "ps_5_0", flags, 0, outCode.GetAddressOf(), outMsgs.GetAddressOf());
 			if (FAILED(hr)) {
 				printf("[D3D] Failed to compile the pixel shader");
 				if (outMsgs != nullptr)

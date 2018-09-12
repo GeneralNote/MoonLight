@@ -9,7 +9,7 @@ namespace ml
 		InputSignature = nullptr;
 	}
 	
-	bool VertexShader::LoadFromMemory(ml::Window& wnd, const char* code, ml::UInt32 codeLen, std::string entry, bool needsCompile)
+	bool VertexShader::LoadFromMemory(ml::Window& wnd, const char* code, ml::UInt32 codeLen, std::string entry, bool needsCompile, const ShaderMacroList& macros)
 	{
 		mWindow = &wnd;
 
@@ -29,7 +29,7 @@ namespace ml
 			ml::Ptr<ID3DBlob> outCode, outMsgs;
 
 			// compile
-			HRESULT hr = D3DCompile(code, codeLen, "VertexShader", nullptr, nullptr, entry.c_str(), "vs_5_0", flags, 0, outCode.GetAddressOf(), outMsgs.GetAddressOf());
+			HRESULT hr = D3DCompile(code, codeLen, "VertexShader", macros.GetData(), nullptr, entry.c_str(), "vs_5_0", flags, 0, outCode.GetAddressOf(), outMsgs.GetAddressOf());
 			if (FAILED(hr)) {
 				printf("[D3D] Failed to compile the vertex shader");
 				if (outMsgs != nullptr)

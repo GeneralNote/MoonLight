@@ -38,7 +38,7 @@ int main()
 	// load vertex shader + create input signature
 	ml::VertexShader vertShader;
 	vertShader.InputSignature = &vertexInfo;
-	vertShader.LoadFromFile(wnd, "vertex.hlsl", "main");
+	vertShader.LoadFromFile(wnd, "vertex.hlsl", "main", true);
 
 	// load model
 	ml::OBJModel obj;
