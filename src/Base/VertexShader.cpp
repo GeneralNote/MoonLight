@@ -9,7 +9,7 @@ namespace ml
 		InputSignature = nullptr;
 	}
 	
-	bool VertexShader::LoadFromMemory(ml::Window& wnd, const char* code, ml::UInt32 codeLen, std::string entry, bool needsCompile, const ShaderMacroList& macros)
+	bool VertexShader::LoadFromMemory(ml::Window& wnd, const char* code, ml::UInt32 codeLen, std::string entry, bool needsCompile, const Shader::MacroList& macros)
 	{
 		mWindow = &wnd;
 

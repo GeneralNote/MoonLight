@@ -11,7 +11,7 @@ namespace ml
 	{
 		mFree();
 	}
-	bool Shader::LoadFromFile(ml::Window & wnd, std::string filename, std::string entry, bool needsCompile, const ShaderMacroList& macros)
+	bool Shader::LoadFromFile(ml::Window & wnd, std::string filename, std::string entry, bool needsCompile, const Shader::MacroList& macros)
 	{
 		// open file
 		FILE *file = fopen(filename.c_str(), "rb");
@@ -47,12 +47,12 @@ namespace ml
 		}
 	}
 
-	ShaderMacroList::ShaderMacroList()
+	Shader::MacroList::MacroList()
 	{
 		mMacros.push_back({ nullptr, nullptr });
 	}
 
-	ShaderMacroList::~ShaderMacroList()
+	Shader::MacroList::~MacroList()
 	{
 		for (int i = 0; i < mMacros.size(); i++) {
 			if (mMacros[i].Name != nullptr) delete mMacros[i].Name;
@@ -62,7 +62,7 @@ namespace ml
 		}
 	}
 
-	void ShaderMacroList::Add(const std::string & name, const std::string & value)
+	void Shader::MacroList::Add(const std::string & name, const std::string & value)
 	{
 		mMacros[mMacros.size() - 1].Name = new char[name.size() + 1];
 		mMacros[mMacros.size() - 1].Definition = new char[value.size() + 1];

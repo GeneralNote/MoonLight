@@ -160,7 +160,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Examples\Common\Camera.cpp" />
-    <ClCompile Include="Examples\SimpleModel\main.cpp" />
+    <ClCompile Include="Examples\Tessellation\main.cpp" />
     <ClCompile Include="inc\MoonLight\Base\Topology.cpp" />
     <ClCompile Include="src\Base\BlendState.cpp" />
     <ClCompile Include="src\Base\Bounds.cpp" />

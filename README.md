@@ -20,7 +20,7 @@ Simple Direct3D 11 wrapper.
 - [x] make Shader class implement LoadFromFile which calls LoadFromMemory
 - [ ] set debug object names in debug mode ( SetPrivateData(WKPDID_D3DDebugObjectName) )
 - [ ] create batch classes (ml\::VertexBufferBatch, ml\::ConstantBufferBatch, ml\::ViewportBatch, etc..)
-- [ ] shader include handler - handles #include statements in loaded .hlsl files ( ml::ShaderIncludeHandler )
+- [ ] -shader include handler - handles #include statements in loaded .hlsl files ( ml::ShaderIncludeHandler )
 - [x] shader macro definitions ( ml::ShaderMacro sMacros; sMacros.Add("QUALITY", "1+4"); shader.SetMacros(sMacros); )
 - [ ] vertex buffer input slots ( ml::VertexBufferBatch batch; batch.Add(positionBuffer); batch.Add(normalBuffer); batch.Bind(); )
 - [ ] better and more attractive compute shader example
