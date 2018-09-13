@@ -22,12 +22,23 @@ namespace ml
 		private:
 			std::vector<D3D_SHADER_MACRO> mMacros;
 		};
+		class IncludeHandler
+		{
+		public:
+			enum class IncludeType
+			{
+				Local,
+				System
+			};
+			virtual bool Open(const std::string& filename, IncludeType type, const void** outData, UINT* outBytes);
+			virtual void Close(const void* data);
+		};
 
 		Shader();
 		~Shader();
 
-		bool LoadFromFile(ml::Window& wnd, std::string filename, std::string entry, bool needsCompile = true, const Shader::MacroList& macros = Shader::MacroList());
-		virtual bool LoadFromMemory(ml::Window& wnd, const char* code, ml::UInt32 codeLen, std::string entry, bool needsCompile = true, const Shader::MacroList& macros = Shader::MacroList()) = 0;
+		bool LoadFromFile(ml::Window& wnd, std::string filename, std::string entry, bool needsCompile = true, const Shader::MacroList& macros = Shader::MacroList(), const IncludeHandler& include = IncludeHandler());
+		virtual bool LoadFromMemory(ml::Window& wnd, const char* code, ml::UInt32 codeLen, std::string entry, bool needsCompile = true, const Shader::MacroList& macros = Shader::MacroList(), const IncludeHandler& include = IncludeHandler()) = 0;
 		virtual void Bind() = 0;
 
 	protected:
@@ -36,6 +47,22 @@ namespace ml
 		ID3D11DeviceChild* mShader;
 		ml::Window* mWindow;
 	};
+
+	namespace priv_impl
+	{
+		// the actual shader include handler
+		class ID3DIncludeHandler : public ID3DInclude
+		{
+		public:
+			ID3DIncludeHandler();
+			ID3DIncludeHandler(Shader::IncludeHandler* handle);
+
+			HRESULT Open(D3D_INCLUDE_TYPE IncludeType, LPCSTR pFileName, LPCVOID pParentData, LPCVOID *ppData, UINT *pBytes);
+			HRESULT Close(LPCVOID pData);
+
+			Shader::IncludeHandler* Handle;
+		};
+	}
 }
 
 #endif // __MOONLIGHT_SHADER_H__

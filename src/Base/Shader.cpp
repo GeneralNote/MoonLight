@@ -1,4 +1,5 @@
 #include <MoonLight/Base/Shader.h>
+#include <fstream>
 
 namespace ml
 {
@@ -11,7 +12,7 @@ namespace ml
 	{
 		mFree();
 	}
-	bool Shader::LoadFromFile(ml::Window & wnd, std::string filename, std::string entry, bool needsCompile, const Shader::MacroList& macros)
+	bool Shader::LoadFromFile(ml::Window & wnd, std::string filename, std::string entry, bool needsCompile, const Shader::MacroList& macros, const IncludeHandler& include)
 	{
 		// open file
 		FILE *file = fopen(filename.c_str(), "rb");
@@ -32,7 +33,7 @@ namespace ml
 		fclose(file);
 
 		// actually parse the data
-		bool ret = LoadFromMemory(wnd, bytecode, bytecodeLen, entry, needsCompile, macros);
+		bool ret = LoadFromMemory(wnd, bytecode, bytecodeLen, entry, needsCompile, macros, include);
 
 		// free the memory
 		free(bytecode);
@@ -72,4 +73,45 @@ namespace ml
 
 		mMacros.push_back({ nullptr, nullptr });
 	}
+
+	namespace priv_impl
+	{
+		ID3DIncludeHandler::ID3DIncludeHandler() : Handle(nullptr) {}
+		ID3DIncludeHandler::ID3DIncludeHandler(Shader::IncludeHandler * handle) : Handle(handle) {}
+		HRESULT ID3DIncludeHandler::Open(D3D_INCLUDE_TYPE IncludeType, LPCSTR pFileName, LPCVOID pParentData, LPCVOID * ppData, UINT * pBytes)
+		{
+			assert(Handle != nullptr);
+
+			bool ret = Handle->Open(std::string(pFileName), (ml::Shader::IncludeHandler::IncludeType)IncludeType, ppData, pBytes);
+
+			return ret ? S_OK : E_FAIL;
+		}
+		HRESULT ID3DIncludeHandler::Close(LPCVOID pData)
+		{
+			assert(Handle != nullptr);
+
+			Handle->Close(pData);
+
+			return S_OK;
+		}
+	}
+	bool Shader::IncludeHandler::Open(const std::string & filename, IncludeType type, const void ** outData, UINT * outBytes)
+	{
+		std::ifstream fileData(filename.c_str(), std::ios::in | std::ios::binary | std::ios::ate);
+
+		if (fileData.is_open()) {
+			*outBytes = fileData.tellg();
+			*outData = new char[*outBytes];
+			fileData.seekg(0, std::ios::beg);
+			fileData.read((char*)(*outData), *outBytes);
+			fileData.close();
+		} else return false;
+
+		return true;
+	}
+	void Shader::IncludeHandler::Close(const void * data)
+	{
+		delete[] data;
+	}
 }
+
