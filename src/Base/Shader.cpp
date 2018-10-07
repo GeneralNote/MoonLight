@@ -52,7 +52,6 @@ namespace ml
 	{
 		mMacros.push_back({ nullptr, nullptr });
 	}
-
 	Shader::MacroList::~MacroList()
 	{
 		for (int i = 0; i < mMacros.size(); i++) {
@@ -62,7 +61,6 @@ namespace ml
 			mMacros[i].Definition = nullptr;
 		}
 	}
-
 	void Shader::MacroList::Add(const std::string & name, const std::string & value)
 	{
 		mMacros[mMacros.size() - 1].Name = new char[name.size() + 1];
@@ -78,7 +76,7 @@ namespace ml
 	{
 		ID3DIncludeHandler::ID3DIncludeHandler() : Handle(nullptr) {}
 		ID3DIncludeHandler::ID3DIncludeHandler(Shader::IncludeHandler * handle) : Handle(handle) {}
-		HRESULT ID3DIncludeHandler::Open(D3D_INCLUDE_TYPE IncludeType, LPCSTR pFileName, LPCVOID pParentData, LPCVOID * ppData, UINT * pBytes)
+		HRESULT __stdcall ID3DIncludeHandler::Open(D3D_INCLUDE_TYPE IncludeType, LPCSTR pFileName, LPCVOID pParentData, LPCVOID * ppData, UINT * pBytes)
 		{
 			assert(Handle != nullptr);
 
@@ -86,7 +84,7 @@ namespace ml
 
 			return ret ? S_OK : E_FAIL;
 		}
-		HRESULT ID3DIncludeHandler::Close(LPCVOID pData)
+		HRESULT __stdcall ID3DIncludeHandler::Close(LPCVOID pData)
 		{
 			assert(Handle != nullptr);
 

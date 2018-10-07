@@ -402,10 +402,10 @@ namespace ml
 				Event event;
 				event.Type = EventType::MouseButtonRelease;
 
-				if (msg == WM_LBUTTONDOWN) event.MouseButton.VK = VK_LBUTTON;
-				else if (msg == WM_RBUTTONDOWN) event.MouseButton.VK = VK_RBUTTON;
-				else if (msg == WM_MBUTTONDOWN) event.MouseButton.VK = VK_MBUTTON;
-				else if (msg == WM_XBUTTONDOWN) event.MouseButton.VK = (wParam & MK_XBUTTON1) ? VK_XBUTTON1 : VK_XBUTTON2;
+				if (msg == WM_LBUTTONUP) event.MouseButton.VK = VK_LBUTTON;
+				else if (msg == WM_RBUTTONUP) event.MouseButton.VK = VK_RBUTTON;
+				else if (msg == WM_MBUTTONUP) event.MouseButton.VK = VK_MBUTTON;
+				else if (msg == WM_XBUTTONUP) event.MouseButton.VK = (wParam & MK_XBUTTON1) ? VK_XBUTTON1 : VK_XBUTTON2;
 
 				event.MouseButton.Position = DirectX::XMINT2(LOWORD(lParam), HIWORD(lParam));
 				mEvents.push(event);
@@ -456,9 +456,19 @@ namespace ml
 		mContext->ClearRenderTargetView(tex.GetView(), mClearColor);
 	}
 
+	void Window::ClearDepthStencil(ml::RenderTexture & tex, float depth, ml::UInt8 stencil)
+	{
+		mContext->ClearDepthStencilView(tex.GetDepthStencilView(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, depth, stencil);
+	}
+
 	void Window::ClearDepthStencil(float depth, ml::UInt8 stencil)
 	{
 		mContext->ClearDepthStencilView(mDepthView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, depth, stencil);
+	}
+
+	void Window::ClearStencil(ml::RenderTexture & tex, ml::UInt8 value)
+	{
+		mContext->ClearDepthStencilView(tex.GetDepthStencilView(), D3D11_CLEAR_STENCIL, 1.0f, value);
 	}
 
 	void Window::ClearStencil(ml::UInt8 value)

@@ -88,7 +88,7 @@ int main()
 
 	// create render texture
 	ml::RenderTexture rt;
-	rt.Create(wnd, DirectX::XMINT2(800, 600), ml::Resource::ShaderResource);
+	rt.Create(wnd, DirectX::XMINT2(800, 600), ml::Resource::ShaderResource, true);
 
 	// create shader resource view to render texture
 	ml::ShaderResourceView rtSRV;
@@ -112,7 +112,7 @@ int main()
 	// we want to render to the rendertexture
 	rt.Bind();
 	rt.Clear();
-	wnd.ClearDepthStencil(1.0f, 0);
+	rt.ClearDepthStencil(1.0f, 0);
 
 	// update cb
 	DirectX::XMStoreFloat4x4(&cbDataWVP.matWVP, DirectX::XMMatrixTranspose(world * viewTopDown * proj));

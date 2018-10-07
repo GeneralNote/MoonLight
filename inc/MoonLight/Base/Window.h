@@ -89,7 +89,9 @@ namespace ml
 		void Clear(ml::RenderTexture& tex);
 
 		// clear depth/stencil texture
+		void ClearDepthStencil(ml::RenderTexture& tex, float depth, ml::UInt8 stencil);
 		void ClearDepthStencil(float depth, ml::UInt8 stencil);
+		void ClearStencil(ml::RenderTexture& tex, ml::UInt8 value);
 		void ClearStencil(ml::UInt8 value);
 
 		// set primitive topology

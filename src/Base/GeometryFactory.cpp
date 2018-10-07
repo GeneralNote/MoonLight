@@ -13,6 +13,7 @@ namespace ml
 			0
 		);
 		verts[2].UV = DirectX::XMFLOAT2(theta / DirectX::XM_2PI, phi / DirectX::XM_PI);
+		DirectX::XMStoreFloat4(&verts[2].Normal, DirectX::XMVector3Normalize(DirectX::XMLoadFloat4(&verts[2].Position)));
 
 		phi = y * sy;
 		theta = (x + 1)* sx;
@@ -23,6 +24,7 @@ namespace ml
 			0
 		);
 		verts[3].UV = verts[1].UV = DirectX::XMFLOAT2(theta / DirectX::XM_2PI, phi / DirectX::XM_PI);
+		DirectX::XMStoreFloat4(&verts[3].Normal, DirectX::XMVector3Normalize(DirectX::XMLoadFloat4(&verts[3].Position)));
 
 		phi = (y + 1) * sy;
 		theta = x * sx;
@@ -33,6 +35,7 @@ namespace ml
 			0
 		);
 		verts[4].UV = verts[0].UV = DirectX::XMFLOAT2(theta / DirectX::XM_2PI, phi / DirectX::XM_PI);
+		DirectX::XMStoreFloat4(&verts[4].Normal, DirectX::XMVector3Normalize(DirectX::XMLoadFloat4(&verts[4].Position)));
 
 		phi = (y + 1) * sy;
 		theta = (x + 1) * sx;
@@ -43,6 +46,7 @@ namespace ml
 			0
 		);
 		verts[5].UV = DirectX::XMFLOAT2(theta / DirectX::XM_2PI, phi / DirectX::XM_PI);
+		DirectX::XMStoreFloat4(&verts[5].Normal, DirectX::XMVector3Normalize(DirectX::XMLoadFloat4(&verts[5].Position)));
 	}
 
 	Geometry GeometryFactory::CreateRectangle(float x, float y, float width, float height, ml::Window& wnd)
@@ -71,8 +75,14 @@ namespace ml
 		ret[2].UV = DirectX::XMFLOAT2(0, 1);
 		ret[3].UV = DirectX::XMFLOAT2(1, 1);
 
+		ret[0].Normal = DirectX::XMFLOAT4(0, 0, -1, 0);
+		ret[1].Normal = DirectX::XMFLOAT4(0, 0, -1, 0);
+		ret[2].Normal = DirectX::XMFLOAT4(0, 0, -1, 0);
+		ret[3].Normal = DirectX::XMFLOAT4(0, 0, -1, 0);
+
 		return ret;
 	}
+
 	Geometry GeometryFactory::CreateCircle(float x, float y, float radiusX, float radiusY, ml::Window & wnd, size_t pointCount)
 	{
 		Geometry ret;
@@ -99,6 +109,10 @@ namespace ml
 		ret[1].UV = DirectX::XMFLOAT2(sin(step) * 0.5f + 0.5f, 1 - (cos(step) * 0.5f + 0.5f));
 		ret[2].UV = DirectX::XMFLOAT2(0.5f, 0.5f);
 
+		ret[0].Normal = DirectX::XMFLOAT4(0, 0, -1, 0);
+		ret[1].Normal = DirectX::XMFLOAT4(0, 0, -1, 0);
+		ret[2].Normal = DirectX::XMFLOAT4(0, 0, -1, 0);
+
 		for (int i = 0; i < pointCount-1; i++) {
 			float xVal = sin(step * (i + 2));
 			float yVal = cos(step * (i + 2));
@@ -107,10 +121,14 @@ namespace ml
 
 			ret[i * 2 + 3].UV = DirectX::XMFLOAT2(xVal * 0.5f + 0.5f, 1 - (yVal * 0.5f + 0.5f));
 			ret[i * 2 + 4].UV = DirectX::XMFLOAT2(0.5f, 0.5f);
+
+			ret[i * 2 + 3].Normal = DirectX::XMFLOAT4(0, 0, -1, 0);
+			ret[i * 2 + 4].Normal = DirectX::XMFLOAT4(0, 0, -1, 0);
 		}
 
 		return ret;
 	}
+
 	Geometry GeometryFactory::CreateTriangle(float x, float y, float size, ml::Window & wnd)
 	{
 		Geometry ret;
@@ -137,8 +155,13 @@ namespace ml
 		ret[1].UV = DirectX::XMFLOAT2(1, 1);
 		ret[2].UV = DirectX::XMFLOAT2(0, 1);
 
+		ret[0].Normal = DirectX::XMFLOAT4(0, 0, -1, 0);
+		ret[1].Normal = DirectX::XMFLOAT4(0, 0, -1, 0);
+		ret[2].Normal = DirectX::XMFLOAT4(0, 0, -1, 0);
+
 		return ret;
 	}
+	
 	Geometry GeometryFactory::CreateSphere(float radius, ml::Window & wnd, size_t sliceCount, size_t stackCount)
 	{
 		Geometry ret;
@@ -200,6 +223,13 @@ namespace ml
 		ret[4].Position = DirectX::XMFLOAT4(halfWidth, -halfHeight, -halfDepth, 0);
 		ret[5].Position = DirectX::XMFLOAT4(-halfWidth, -halfHeight, -halfDepth, 0);
 
+		ret[0].Normal = DirectX::XMFLOAT4(0, 0, -1, 0);
+		ret[1].Normal = DirectX::XMFLOAT4(0, 0, -1, 0);
+		ret[2].Normal = DirectX::XMFLOAT4(0, 0, -1, 0);
+		ret[3].Normal = DirectX::XMFLOAT4(0, 0, -1, 0);
+		ret[4].Normal = DirectX::XMFLOAT4(0, 0, -1, 0);
+		ret[5].Normal = DirectX::XMFLOAT4(0, 0, -1, 0);
+
 		// back face
 		ret[6].Position = DirectX::XMFLOAT4(-halfWidth, -halfHeight, halfDepth, 0);
 		ret[7].Position = DirectX::XMFLOAT4(halfWidth, halfHeight, halfDepth, 0);
@@ -208,6 +238,13 @@ namespace ml
 		ret[9].Position = DirectX::XMFLOAT4(-halfWidth, -halfHeight, halfDepth, 0);
 		ret[10].Position = DirectX::XMFLOAT4(halfWidth, -halfHeight, halfDepth, 0);
 		ret[11].Position = DirectX::XMFLOAT4(halfWidth, halfHeight, halfDepth, 0);
+
+		ret[6].Normal = DirectX::XMFLOAT4(0, 0, 1, 0);
+		ret[7].Normal = DirectX::XMFLOAT4(0, 0, 1, 0);
+		ret[8].Normal = DirectX::XMFLOAT4(0, 0, 1, 0);
+		ret[9].Normal = DirectX::XMFLOAT4(0, 0, 1, 0);
+		ret[10].Normal = DirectX::XMFLOAT4(0, 0, 1, 0);
+		ret[11].Normal = DirectX::XMFLOAT4(0, 0, 1, 0);
 
 		// top face
 		ret[12].Position = DirectX::XMFLOAT4(-halfWidth, halfHeight, halfDepth, 0);
@@ -218,6 +255,13 @@ namespace ml
 		ret[16].Position = DirectX::XMFLOAT4(halfWidth, halfHeight, -halfDepth, 0);
 		ret[17].Position = DirectX::XMFLOAT4(-halfWidth, halfHeight, -halfDepth, 0);
 
+		ret[12].Normal = DirectX::XMFLOAT4(0, 1, 0, 0);
+		ret[13].Normal = DirectX::XMFLOAT4(0, 1, 0, 0);
+		ret[14].Normal = DirectX::XMFLOAT4(0, 1, 0, 0);
+		ret[15].Normal = DirectX::XMFLOAT4(0, 1, 0, 0);
+		ret[16].Normal = DirectX::XMFLOAT4(0, 1, 0, 0);
+		ret[17].Normal = DirectX::XMFLOAT4(0, 1, 0, 0);
+
 		// bottom face
 		ret[18].Position = DirectX::XMFLOAT4(-halfWidth, -halfHeight, -halfDepth, 0);
 		ret[19].Position = DirectX::XMFLOAT4(halfWidth, -halfHeight, -halfDepth, 0);
@@ -226,6 +270,13 @@ namespace ml
 		ret[21].Position = DirectX::XMFLOAT4(halfWidth, -halfHeight, -halfDepth, 0);
 		ret[22].Position = DirectX::XMFLOAT4(halfWidth, -halfHeight, halfDepth, 0);
 		ret[23].Position = DirectX::XMFLOAT4(-halfWidth, -halfHeight, halfDepth, 0);
+
+		ret[18].Normal = DirectX::XMFLOAT4(0, -1, 0, 0);
+		ret[19].Normal = DirectX::XMFLOAT4(0, -1, 0, 0);
+		ret[20].Normal = DirectX::XMFLOAT4(0, -1, 0, 0);
+		ret[21].Normal = DirectX::XMFLOAT4(0, -1, 0, 0);
+		ret[22].Normal = DirectX::XMFLOAT4(0, -1, 0, 0);
+		ret[23].Normal = DirectX::XMFLOAT4(0, -1, 0, 0);
 
 		// right face
 		ret[24].Position = DirectX::XMFLOAT4(halfWidth, halfHeight, halfDepth, 0);
@@ -236,7 +287,14 @@ namespace ml
 		ret[28].Position = DirectX::XMFLOAT4(halfWidth, halfHeight, halfDepth, 0);
 		ret[29].Position = DirectX::XMFLOAT4(halfWidth, -halfHeight, halfDepth, 0);
 
-		// right face
+		ret[24].Normal = DirectX::XMFLOAT4(1, 0, 0, 0);
+		ret[25].Normal = DirectX::XMFLOAT4(1, 0, 0, 0);
+		ret[26].Normal = DirectX::XMFLOAT4(1, 0, 0, 0);
+		ret[27].Normal = DirectX::XMFLOAT4(1, 0, 0, 0);
+		ret[28].Normal = DirectX::XMFLOAT4(1, 0, 0, 0);
+		ret[29].Normal = DirectX::XMFLOAT4(1, 0, 0, 0);
+
+		// left face
 		ret[30].Position = DirectX::XMFLOAT4(-halfWidth, halfHeight, halfDepth, 0);
 		ret[31].Position = DirectX::XMFLOAT4(-halfWidth, halfHeight, -halfDepth, 0);
 		ret[32].Position = DirectX::XMFLOAT4(-halfWidth, -halfHeight, halfDepth, 0);
@@ -245,7 +303,14 @@ namespace ml
 		ret[34].Position = DirectX::XMFLOAT4(-halfWidth, -halfHeight, -halfDepth, 0);
 		ret[35].Position = DirectX::XMFLOAT4(-halfWidth, -halfHeight, halfDepth, 0);
 
+		ret[30].Normal = DirectX::XMFLOAT4(-1, 0, 0, 0);
+		ret[31].Normal = DirectX::XMFLOAT4(-1, 0, 0, 0);
+		ret[32].Normal = DirectX::XMFLOAT4(-1, 0, 0, 0);
+		ret[33].Normal = DirectX::XMFLOAT4(-1, 0, 0, 0);
+		ret[34].Normal = DirectX::XMFLOAT4(-1, 0, 0, 0);
+		ret[35].Normal = DirectX::XMFLOAT4(-1, 0, 0, 0);
 
+		// UVs
 		ret[0].UV = DirectX::XMFLOAT2(0, 0);
 		ret[1].UV = DirectX::XMFLOAT2(1, 0);
 		ret[2].UV = DirectX::XMFLOAT2(0, 1);
@@ -329,6 +394,13 @@ namespace ml
 		ret[3].UV = DirectX::XMFLOAT2(1, 0);
 		ret[4].UV = DirectX::XMFLOAT2(1, 1);
 		ret[5].UV = DirectX::XMFLOAT2(0, 1);
+
+		ret[0].Normal = DirectX::XMFLOAT4(0, 1, 0, 0);
+		ret[1].Normal = DirectX::XMFLOAT4(0, 1, 0, 0);
+		ret[2].Normal = DirectX::XMFLOAT4(0, 1, 0, 0);
+		ret[3].Normal = DirectX::XMFLOAT4(0, 1, 0, 0);
+		ret[4].Normal = DirectX::XMFLOAT4(0, 1, 0, 0);
+		ret[5].Normal = DirectX::XMFLOAT4(0, 1, 0, 0);
 
 		return ret;
 	}

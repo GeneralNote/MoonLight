@@ -57,8 +57,8 @@ namespace ml
 			ID3DIncludeHandler();
 			ID3DIncludeHandler(Shader::IncludeHandler* handle);
 
-			HRESULT Open(D3D_INCLUDE_TYPE IncludeType, LPCSTR pFileName, LPCVOID pParentData, LPCVOID *ppData, UINT *pBytes);
-			HRESULT Close(LPCVOID pData);
+			HRESULT __stdcall Open(D3D_INCLUDE_TYPE IncludeType, LPCSTR pFileName, LPCVOID pParentData, LPCVOID *ppData, UINT *pBytes);
+			HRESULT __stdcall Close(LPCVOID pData);
 
 			Shader::IncludeHandler* Handle;
 		};

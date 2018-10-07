@@ -12,11 +12,8 @@ namespace ml
 		struct Vertex
 		{
 			DirectX::XMFLOAT4 Position;
+			DirectX::XMFLOAT4 Normal;
 			DirectX::XMFLOAT2 UV;
-			/*
-				TODOOOOOOOOOOOOOOOOOOOOOOO
-				NORMALS!
-			*/
 		};
 
 		void Create(ml::Window& wnd, Vertex* verts, size_t count);

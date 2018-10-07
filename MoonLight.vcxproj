@@ -27,7 +27,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -40,7 +40,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -159,7 +159,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Examples\Common\Camera.cpp" />
     <ClCompile Include="inc\MoonLight\Base\Topology.cpp" />
     <ClCompile Include="src\Base\BlendState.cpp" />
     <ClCompile Include="src\Base\Bounds.cpp" />
@@ -192,7 +191,6 @@
     <ClCompile Include="src\Model\OBJModel.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Examples\Common\Camera.h" />
     <ClInclude Include="inc\MoonLight\Base\BlendState.h" />
     <ClInclude Include="inc\MoonLight\Base\Bounds.h" />
     <ClInclude Include="inc\MoonLight\Base\Buffer.h" />

@@ -22,6 +22,7 @@ namespace ml
 		void Create(ml::Window& wnd, const char* vShaderCode, ml::UInt32 vShaderLength);
 
 		inline ID3D11InputLayout* GetInputLayout() { return mLayout.Get(); }
+		inline std::vector<D3D11_INPUT_ELEMENT_DESC>& GetInputElements() { return mElements; }
 
 	private:
 		ml::Ptr<ID3D11InputLayout> mLayout;
