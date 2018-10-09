@@ -22,6 +22,7 @@ namespace ml
 		IResource() { mResource = nullptr; mWindow = nullptr; m_lastResource = 0; }
 
 		inline ID3D11Resource* GetResource() { return mResource.Get(); }
+		inline void Release() { mResource.Reset(); }
 		bool Map(MapData& data, MapType mapMode, ml::UInt32 resource = 0, bool doNotWait = false);
 		void Unmap();
 

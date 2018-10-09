@@ -1,6 +1,7 @@
 template<typename T>
 inline void ml::VertexBuffer<T>::Create(ml::Window& wnd, T* vert, ml::UInt32 vertCount, ml::Resource::Flags flags)
 {
+	this->Release();
 	this->SetOwner(wnd);
 
 	D3D11_BUFFER_DESC buffDesc;

@@ -2,6 +2,7 @@
 template<typename T>
 inline void ml::ConstantBuffer<T>::Create(ml::Window & wnd, T * data, ml::UInt32 dataSize, ml::Resource::Flags flags)
 {
+	this->Release();
 	this->SetOwner(wnd);
 
 	D3D11_BUFFER_DESC buffDesc;

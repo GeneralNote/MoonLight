@@ -23,6 +23,7 @@ namespace ml
 
 		inline ID3D11InputLayout* GetInputLayout() { return mLayout.Get(); }
 		inline std::vector<D3D11_INPUT_ELEMENT_DESC>& GetInputElements() { return mElements; }
+		inline void Reset() { mLayout.Reset(); }
 
 	private:
 		ml::Ptr<ID3D11InputLayout> mLayout;
