@@ -3,6 +3,7 @@
 
 #include <MoonLight/Base/Math.h>
 #include <DirectXTex.h>
+#include <string>
 
 namespace ml
 {

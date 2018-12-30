@@ -13,7 +13,6 @@ namespace ml
 			0
 		);
 		verts[2].UV = DirectX::XMFLOAT2(theta / DirectX::XM_2PI, phi / DirectX::XM_PI);
-		DirectX::XMStoreFloat4(&verts[2].Normal, DirectX::XMVector3Normalize(DirectX::XMLoadFloat4(&verts[2].Position)));
 
 		phi = y * sy;
 		theta = (x + 1)* sx;
@@ -24,7 +23,6 @@ namespace ml
 			0
 		);
 		verts[3].UV = verts[1].UV = DirectX::XMFLOAT2(theta / DirectX::XM_2PI, phi / DirectX::XM_PI);
-		DirectX::XMStoreFloat4(&verts[3].Normal, DirectX::XMVector3Normalize(DirectX::XMLoadFloat4(&verts[3].Position)));
 
 		phi = (y + 1) * sy;
 		theta = x * sx;
@@ -35,7 +33,6 @@ namespace ml
 			0
 		);
 		verts[4].UV = verts[0].UV = DirectX::XMFLOAT2(theta / DirectX::XM_2PI, phi / DirectX::XM_PI);
-		DirectX::XMStoreFloat4(&verts[4].Normal, DirectX::XMVector3Normalize(DirectX::XMLoadFloat4(&verts[4].Position)));
 
 		phi = (y + 1) * sy;
 		theta = (x + 1) * sx;
@@ -46,7 +43,6 @@ namespace ml
 			0
 		);
 		verts[5].UV = DirectX::XMFLOAT2(theta / DirectX::XM_2PI, phi / DirectX::XM_PI);
-		DirectX::XMStoreFloat4(&verts[5].Normal, DirectX::XMVector3Normalize(DirectX::XMLoadFloat4(&verts[5].Position)));
 	}
 
 	Geometry GeometryFactory::CreateRectangle(float x, float y, float width, float height, ml::Window& wnd)
@@ -190,6 +186,9 @@ namespace ml
 				generateFace(ret + index, radius, stepX, stepY, j, i);
 			}
 		}
+
+		for (int i = 0; i < count; i++)
+			DirectX::XMStoreFloat4(&ret[i].Normal, DirectX::XMVector3Normalize(DirectX::XMLoadFloat4(&ret[i].Position)));
 
 		return ret;
 	}
