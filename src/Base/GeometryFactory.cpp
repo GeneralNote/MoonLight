@@ -61,10 +61,10 @@ namespace ml
 		count = 4;
 		Geometry::Vertex* ret = new Geometry::Vertex[count];
 		
-		ret[0].Position = DirectX::XMFLOAT4(x, y, 1, 0);
-		ret[1].Position = DirectX::XMFLOAT4(x + width, y, 1, 0);
-		ret[2].Position = DirectX::XMFLOAT4(x, y - height, 1, 0);
-		ret[3].Position = DirectX::XMFLOAT4(x + width, y - height, 1, 0);
+		ret[0].Position = DirectX::XMFLOAT4(x, y, 0, 0);
+		ret[1].Position = DirectX::XMFLOAT4(x + width, y, 0, 0);
+		ret[2].Position = DirectX::XMFLOAT4(x, y - height, 0, 0);
+		ret[3].Position = DirectX::XMFLOAT4(x + width, y - height, 0, 0);
 
 		ret[0].UV = DirectX::XMFLOAT2(0, 0);
 		ret[1].UV = DirectX::XMFLOAT2(1, 0);
@@ -97,9 +97,9 @@ namespace ml
 
 		float step = DirectX::XM_2PI / pointCount;
 
-		ret[0].Position = DirectX::XMFLOAT4(x + radiusX * sin(0), y + radiusY * cos(0), 1, 0);
-		ret[1].Position = DirectX::XMFLOAT4(x + radiusX * sin(step), y + radiusY * cos(step), 1, 0);
-		ret[2].Position = DirectX::XMFLOAT4(x, y, 1, 0);
+		ret[0].Position = DirectX::XMFLOAT4(x + radiusX * sin(0), y + radiusY * cos(0), 0, 0);
+		ret[1].Position = DirectX::XMFLOAT4(x + radiusX * sin(step), y + radiusY * cos(step), 0, 0);
+		ret[2].Position = DirectX::XMFLOAT4(x, y, 0, 0);
 
 		ret[0].UV = DirectX::XMFLOAT2(sin(0) * 0.5f + 0.5f, 1-(cos(0) * 0.5f + 0.5f));
 		ret[1].UV = DirectX::XMFLOAT2(sin(step) * 0.5f + 0.5f, 1 - (cos(step) * 0.5f + 0.5f));
@@ -112,8 +112,8 @@ namespace ml
 		for (int i = 0; i < pointCount-1; i++) {
 			float xVal = sin(step * (i + 2));
 			float yVal = cos(step * (i + 2));
-			ret[i*2 + 3].Position = DirectX::XMFLOAT4(x + radiusX * xVal, y + radiusY * yVal, 1, 0);
-			ret[i*2 + 4].Position = DirectX::XMFLOAT4(x, y, 1, 0);
+			ret[i*2 + 3].Position = DirectX::XMFLOAT4(x + radiusX * xVal, y + radiusY * yVal, 0, 0);
+			ret[i*2 + 4].Position = DirectX::XMFLOAT4(x, y, 0, 0);
 
 			ret[i * 2 + 3].UV = DirectX::XMFLOAT2(xVal * 0.5f + 0.5f, 1 - (yVal * 0.5f + 0.5f));
 			ret[i * 2 + 4].UV = DirectX::XMFLOAT2(0.5f, 0.5f);
@@ -143,9 +143,9 @@ namespace ml
 
 		float rightOffs = size / tan(DirectX::XMConvertToRadians(30));
 
-		ret[0].Position = DirectX::XMFLOAT4(x, y + size, 1, 0);
-		ret[1].Position = DirectX::XMFLOAT4(x + rightOffs, y - size, 1, 0);
-		ret[2].Position = DirectX::XMFLOAT4(x - rightOffs, y - size, 1, 0);
+		ret[0].Position = DirectX::XMFLOAT4(x, y + size, 0, 0);
+		ret[1].Position = DirectX::XMFLOAT4(x + rightOffs, y - size, 0, 0);
+		ret[2].Position = DirectX::XMFLOAT4(x - rightOffs, y - size, 0, 0);
 
 		ret[0].UV = DirectX::XMFLOAT2(0.5f, 0);
 		ret[1].UV = DirectX::XMFLOAT2(1, 1);

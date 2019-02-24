@@ -366,7 +366,7 @@ namespace ml
 		free(vn);
 		free(vt);
 
-		return false;
+		return true;
 	}
 	OBJModel::Vertex * OBJModel::GetObjectVertices(const std::string & str)
 	{

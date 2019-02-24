@@ -19,6 +19,7 @@ Simple Direct3D 11 wrapper.
 - [x] convert ml\::Resource::CPUAccess parameters to UInt8 so that bitwise operators can be used
 - [x] make Shader class implement LoadFromFile which calls LoadFromMemory
 - [ ] set debug object names in debug mode ( SetPrivateData(WKPDID_D3DDebugObjectName) )
+- [ ] geometry NORMALS should start at offset: 12
 - [ ] create batch classes (ml\::VertexBufferBatch, ml\::ConstantBufferBatch, ml\::ViewportBatch, etc..)
 - [x] shader include handler - handles #include statements in loaded .hlsl files ( ml::ShaderIncludeHandler )
 - [x] shader macro definitions ( ml::ShaderMacro sMacros; sMacros.Add("QUALITY", "1+4"); shader.SetMacros(sMacros); )
