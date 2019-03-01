@@ -6,7 +6,25 @@ namespace ml
 	{
 		mView.Reset();
 
-		HRESULT hr = wnd.GetDevice()->CreateShaderResourceView(tex.GetResource(), nullptr, mView.GetAddressOf());
+		HRESULT hr = E_FAIL;
+
+		ID3D11Texture2D* out;
+		D3D11_TEXTURE2D_DESC texDesc;
+		tex.GetResource()->QueryInterface(IID_ID3D11Texture2D, reinterpret_cast<void**>(&out));
+		out->GetDesc(&texDesc);
+
+		if (texDesc.MiscFlags & D3D11_RESOURCE_MISC_TEXTURECUBE) {
+			D3D11_SHADER_RESOURCE_VIEW_DESC desc;
+			memset(&desc, 0, sizeof(desc));
+
+			desc.Format = texDesc.Format;
+			desc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURECUBE;
+			desc.TextureCube.MostDetailedMip = 0;
+			desc.TextureCube.MipLevels = -1;
+
+			hr = wnd.GetDevice()->CreateShaderResourceView(tex.GetResource(), &desc, mView.GetAddressOf());
+		} else hr = wnd.GetDevice()->CreateShaderResourceView(tex.GetResource(), nullptr, mView.GetAddressOf());
+
 		mWnd = &wnd;
 
 		return !FAILED(hr);

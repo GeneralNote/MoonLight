@@ -5,6 +5,7 @@ namespace ml
 	Image::Image()
 	{
 		mData = new DirectX::ScratchImage();
+	
 	}
 	Image::~Image()
 	{
@@ -63,6 +64,7 @@ namespace ml
 	bool Image::LoadFromMemory(const char * data, ml::UInt32 dataLen, Type type)
 	{
 		DirectX::TexMetadata meta;
+
 		HRESULT hr = S_OK;
 		if (type == Type::DDS)
 			hr = DirectX::LoadFromDDSMemory(data, dataLen, 0, &meta, *mData);
