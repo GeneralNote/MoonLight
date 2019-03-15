@@ -6,8 +6,9 @@ namespace ml
 	std::string Keyboard::KeyToString(VirtualKey vk)
 	{
 		static const std::string names[0xE8] = {
+			"",
 			"LCLICK",
-			"RICLICK",
+			"RCLICK",
 			"CANCEL",
 			"MCLICK",
 			"XBUTTON1",
@@ -74,7 +75,7 @@ namespace ml
 			"SUBTRACT",
 			"DECIMAL",
 			"DIVIDE",
-			"F0", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9",
+			"F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9",
 			"F10", "F11", "F12", "F13", "F14", "F15", "F16", "F17", "F18", "F19",
 			"F20", "F21", "F22", "F23", "F24",
 			"NAVVIEW", "NAVMENU", "NAVUP", "NAVDOWN", "NAVLEFT", "NAVRIGHT", "NAVACCEPT", "NAVCANCEL",
