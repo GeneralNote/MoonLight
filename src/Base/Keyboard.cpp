@@ -168,9 +168,6 @@ namespace ml
 			"PACKET"
 		};
 
-		printf("f1: %s\n", names[VK_F1].c_str());
-		printf("comma: %s\n", names[VK_OEM_COMMA].c_str());
-
 		return names[vk];
 	}
 }
