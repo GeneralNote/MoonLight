@@ -173,6 +173,7 @@
     <ClCompile Include="src\Base\Image.cpp" />
     <ClCompile Include="src\Base\IResource.cpp" />
     <ClCompile Include="src\Base\Keyboard.cpp" />
+    <ClCompile Include="src\Base\Logger.cpp" />
     <ClCompile Include="src\Base\RasterizerState.cpp" />
     <ClCompile Include="src\Base\RenderTexture.cpp" />
     <ClCompile Include="src\Base\Resource.cpp" />
@@ -233,6 +234,7 @@
     <ClInclude Include="inc\MoonLight\Model\Model.h" />
     <ClInclude Include="inc\MoonLight\Model\MLMModel.h" />
     <ClInclude Include="inc\MoonLight\Model\OBJModel.h" />
+    <ClInclude Include="inc\MoonLight\Base\Logger.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="inc\MoonLight\Base\Buffer.inl" />

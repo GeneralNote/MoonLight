@@ -1,6 +1,7 @@
 #ifndef __MOONLIGHT_WINDOW_H__
 #define __MOONLIGHT_WINDOW_H__
 #include <MoonLight/Base/Topology.h>
+#include <MoonLight/Base/Logger.h>
 #include <MoonLight/Base/Event.h>
 #include <MoonLight/Base/Color.h>
 #include <MoonLight/Base/Math.h>
@@ -109,6 +110,10 @@ namespace ml
 		// execute compute shader
 		void Compute(UInt32 x, UInt32 y, UInt32 z);
 
+		// set/get logger
+		void SetLogger(Logger* log);
+		inline Logger* GetLogger() { return mLogger; }
+
 		// reset some states
 		void RemoveBlendState();
 		void RemoveRasterizerState();
@@ -144,6 +149,8 @@ namespace ml
 		ml::Ptr<ID3D11Texture2D> mDepthTexture;
 		ml::Ptr<ID3D11DepthStencilView> mDepthView;
 		D3D_FEATURE_LEVEL mFeatureLevel;
+
+		Logger* mLogger;				// class that will handle logs
 
 		HWND mWnd;						// WIN32 window handle
 		bool mCursorVisible;			// protection for ShowCursor() internal counter

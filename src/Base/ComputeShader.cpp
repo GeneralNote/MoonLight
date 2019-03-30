@@ -28,24 +28,23 @@ namespace ml
 			// compile
 			HRESULT hr = D3DCompile(code, codeLen, "ComputeShader", macros.GetData(), &hInclude, entry.c_str(), "cs_5_0", flags, 0, outCode.GetAddressOf(), outMsgs.GetAddressOf());
 			if (FAILED(hr)) {
-				printf("[D3D] Failed to compile the compute shader");
+				wnd.GetLogger()->Log("[D3D] Failed to compile the compute shader.");
 				if (outMsgs != nullptr)
-					printf(" (%s)", (char*)outMsgs->GetBufferPointer());
-				printf(".\n");
+					wnd.GetLogger()->Log((char*)outMsgs->GetBufferPointer());
 				return false;
 			}
 
 			// create shader object with bytecode
 			hr = wnd.GetDevice()->CreateComputeShader(outCode->GetBufferPointer(), outCode->GetBufferSize(), nullptr, (ID3D11ComputeShader**)&mShader);
 			if (FAILED(hr)) {
-				printf("[D3D] Failed to create compute shader.\n");
+				wnd.GetLogger()->Log("[D3D] Failed to create compute shader.");
 				return false;
 			}
 		} else {
 			// create shader object
 			HRESULT hr = wnd.GetDevice()->CreateComputeShader(code, codeLen, nullptr, (ID3D11ComputeShader**)&mShader);
 			if (FAILED(hr)) {
-				printf("[D3D] Failed to create compute shader.\n");
+				wnd.GetLogger()->Log("[D3D] Failed to create compute shader.");
 				return false;
 			}
 		}

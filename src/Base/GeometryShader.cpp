@@ -26,26 +26,25 @@ namespace ml
 			priv_impl::ID3DIncludeHandler hInclude(const_cast<IncludeHandler*>(&include));
 
 			// compile
-			HRESULT hr = D3DCompile(code, codeLen, "GeometryShader", macros.GetData(), &hInclude, entry.c_str(), "gs_5_0", flags, 0, outCode.GetAddressOf(), outMsgs.GetAddressOf());
+			HRESULT hr = D3DCompile(code, codeLen, mFile.c_str(), macros.GetData(), &hInclude, entry.c_str(), "gs_5_0", flags, 0, outCode.GetAddressOf(), outMsgs.GetAddressOf());
 			if (FAILED(hr)) {
-				printf("[D3D] Failed to compile the geometry shader");
+				wnd.GetLogger()->Log("[D3D] Failed to compile the geometry shader.");
 				if (outMsgs != nullptr)
-					printf(" (%s)", (char*)outMsgs->GetBufferPointer());
-				printf(".\n");
+					wnd.GetLogger()->Log((char*)outMsgs->GetBufferPointer());
 				return false;
 			}
 
 			// create shader object with bytecode
 			hr = wnd.GetDevice()->CreateGeometryShader(outCode->GetBufferPointer(), outCode->GetBufferSize(), nullptr, (ID3D11GeometryShader**)&mShader);
 			if (FAILED(hr)) {
-				printf("[D3D] Failed to create geometry shader.\n");
+				wnd.GetLogger()->Log("[D3D] Failed to create geometry shader.\n");
 				return false;
 			}
 		} else {
 			// create shader object
 			HRESULT hr = wnd.GetDevice()->CreateGeometryShader(code, codeLen, nullptr, (ID3D11GeometryShader**)&mShader);
 			if (FAILED(hr)) {
-				printf("[D3D] Failed to create geometry shader.\n");
+				wnd.GetLogger()->Log("[D3D] Failed to create geometry shader.\n");
 				return false;
 			}
 		}

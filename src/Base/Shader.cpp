@@ -7,6 +7,7 @@ namespace ml
 	{
 		mShader = nullptr;
 		mWindow = nullptr;
+		mFile = "null.hlsl";
 	}
 	Shader::~Shader()
 	{
@@ -14,6 +15,8 @@ namespace ml
 	}
 	bool Shader::LoadFromFile(ml::Window & wnd, std::string filename, std::string entry, bool needsCompile, const Shader::MacroList& macros, const IncludeHandler& include)
 	{
+		mFile = filename;
+
 		// open file
 		FILE *file = fopen(filename.c_str(), "rb");
 

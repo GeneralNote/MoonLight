@@ -44,6 +44,8 @@ namespace ml
 	protected:
 		void mFree();
 
+		std::string mFile;
+
 		ID3D11DeviceChild* mShader;
 		ml::Window* mWindow;
 	};

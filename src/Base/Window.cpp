@@ -16,6 +16,7 @@ namespace ml
 		mOpen(false),
 		mVSync(false)
 	{
+		mLogger = new Logger();
 	}
 
 	void Window::Create(DirectX::XMINT2 size, std::string name, ml::Window::Style style, Config info)
@@ -425,12 +426,17 @@ namespace ml
 		mContext.Reset();
 		mDevice.Reset();
 
+		delete mLogger;
+		mLogger = nullptr;
+
 		// destroy the window
 		if (mWnd)
 			DestroyWindow(mWnd);
 
 		// unregister the class name
 		UnregisterClassW(Window::Name, NULL);
+
+		mOpen = false;
 	}
 
 	void Window::SetClearColor(ml::Color color)
@@ -499,6 +505,14 @@ namespace ml
 	void Window::Compute(UInt32 x, UInt32 y, UInt32 z)
 	{
 		mContext->Dispatch(x, y, z);
+	}
+
+	void Window::SetLogger(Logger* log)
+	{
+		if (mLogger != nullptr)
+			delete mLogger;
+
+		mLogger = log;
 	}
 
 	void Window::RemoveRasterizerState()
