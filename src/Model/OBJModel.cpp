@@ -70,15 +70,15 @@ namespace ml
 		mVertices = (Vertex*)malloc(vertAlloc * 3 * sizeof(Vertex));
 
 		// vertex list
-		ml::UInt16 vCount = 0;
+		ml::UInt32 vCount = 0;
 		XMFLOAT3* v = (XMFLOAT3*)malloc(vertPosAlloc * sizeof(XMFLOAT3));
 
 		// normal list
-		ml::UInt16 vnCount = 0;
+		ml::UInt32 vnCount = 0;
 		XMFLOAT3* vn = (XMFLOAT3*)malloc(vertNormAlloc * sizeof(XMFLOAT3));
 
 		// uv list
-		ml::UInt16 vtCount = 0;
+		ml::UInt32 vtCount = 0;
 		XMFLOAT2* vt = (XMFLOAT2*)malloc(vertUVAlloc * sizeof(XMFLOAT2));
 
 		// group & object list

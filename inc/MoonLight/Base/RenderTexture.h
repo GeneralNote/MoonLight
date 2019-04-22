@@ -14,7 +14,7 @@ namespace ml
 	public:
 		RenderTexture();
 
-		void Create(ml::Window& wnd, DirectX::XMINT2 size, ml::Resource::Flags flags = 0, bool createDepthTxt = false);
+		void Create(ml::Window& wnd, DirectX::XMINT2 size, ml::Resource::Flags flags = 0, bool createDepthTxt = false, int bpp = 8);
 		inline void Clear() { assert(mWnd != nullptr); mWnd->Clear(*this); }
 		inline void ClearDepthStencil(float depth, ml::UInt8 stencil) { assert(mWnd != nullptr); mWnd->ClearDepthStencil(*this, depth, stencil); }
 		inline void ClearStencil(ml::UInt8 value) { assert(mWnd != nullptr); mWnd->ClearStencil(*this, value); }

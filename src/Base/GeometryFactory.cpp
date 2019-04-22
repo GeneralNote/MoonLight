@@ -394,12 +394,12 @@ namespace ml
 		ret[4].UV = DirectX::XMFLOAT2(1, 1);
 		ret[5].UV = DirectX::XMFLOAT2(0, 1);
 
-		ret[0].Normal = DirectX::XMFLOAT4(0, 1, 0, 0);
-		ret[1].Normal = DirectX::XMFLOAT4(0, 1, 0, 0);
-		ret[2].Normal = DirectX::XMFLOAT4(0, 1, 0, 0);
-		ret[3].Normal = DirectX::XMFLOAT4(0, 1, 0, 0);
-		ret[4].Normal = DirectX::XMFLOAT4(0, 1, 0, 0);
-		ret[5].Normal = DirectX::XMFLOAT4(0, 1, 0, 0);
+		ret[0].Normal = DirectX::XMFLOAT4(0, 0, -1, 0);
+		ret[1].Normal = DirectX::XMFLOAT4(0, 0, -1, 0);
+		ret[2].Normal = DirectX::XMFLOAT4(0, 0, -1, 0);
+		ret[3].Normal = DirectX::XMFLOAT4(0, 0, -1, 0);
+		ret[4].Normal = DirectX::XMFLOAT4(0, 0, -1, 0);
+		ret[5].Normal = DirectX::XMFLOAT4(0, 0, -1, 0);
 
 		return ret;
 	}

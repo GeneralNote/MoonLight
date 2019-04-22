@@ -6,7 +6,7 @@ namespace ml
 	{
 		mWnd = nullptr;
 	}
-	void RenderTexture::Create(ml::Window & wnd, DirectX::XMINT2 size, ml::Resource::Flags flags, bool depthTxt)
+	void RenderTexture::Create(ml::Window & wnd, DirectX::XMINT2 size, ml::Resource::Flags flags, bool depthTxt, int bpp)
 	{
 		assert(size.x > 0);
 		assert(size.y > 0);
@@ -28,7 +28,13 @@ namespace ml
 
 		desc.ArraySize = 1;
 		desc.BindFlags |= D3D11_BIND_RENDER_TARGET;
-		desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+		if (bpp == 8)
+			desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+		else if (bpp == 16)
+			desc.Format = DXGI_FORMAT_R16G16B16A16_UNORM;
+		else
+			desc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+
 		desc.Height = size.y;
 		desc.MipLevels = 1;
 		desc.Width = size.x;
