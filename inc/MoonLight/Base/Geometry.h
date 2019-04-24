@@ -11,8 +11,8 @@ namespace ml
 	public:
 		struct Vertex
 		{
-			DirectX::XMFLOAT4 Position;
-			DirectX::XMFLOAT4 Normal;
+			DirectX::XMFLOAT3 Position;
+			DirectX::XMFLOAT3 Normal;
 			DirectX::XMFLOAT2 UV;
 		};
 

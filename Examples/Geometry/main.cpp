@@ -32,7 +32,7 @@ int main()
 	// describe our vertex data
 	ml::VertexInputLayout vertexInfo;
 	vertexInfo.Add("POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0);
-	vertexInfo.Add("TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 32);
+	vertexInfo.Add("TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 24);
 
 	// load pixel shader
 	ml::PixelShader pxShader;

@@ -6,7 +6,7 @@ cbuffer cbPerFrame : register(b0)
 
 struct VSInput
 {
-	float4 Position : POSITION;
+	float3 Position : POSITION;
 	float2 UV : TEXCOORD;
 };
 

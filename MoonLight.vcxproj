@@ -159,6 +159,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Examples\Common\Camera.cpp" />
     <ClCompile Include="inc\MoonLight\Base\Topology.cpp" />
     <ClCompile Include="src\Base\BlendState.cpp" />
     <ClCompile Include="src\Base\Bounds.cpp" />
@@ -193,6 +194,7 @@
     <ClCompile Include="src\Model\OBJModel.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Examples\Common\Camera.h" />
     <ClInclude Include="inc\MoonLight\Base\BlendState.h" />
     <ClInclude Include="inc\MoonLight\Base\Bounds.h" />
     <ClInclude Include="inc\MoonLight\Base\Buffer.h" />
