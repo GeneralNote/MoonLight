@@ -41,6 +41,8 @@ namespace ml
 		virtual bool LoadFromMemory(ml::Window& wnd, const char* code, ml::UInt32 codeLen, std::string entry, bool needsCompile = true, const Shader::MacroList& macros = Shader::MacroList(), const IncludeHandler& include = IncludeHandler()) = 0;
 		virtual void Bind() = 0;
 
+		inline ID3D11DeviceChild* GetShader() { return mShader; }
+
 	protected:
 		void mFree();
 

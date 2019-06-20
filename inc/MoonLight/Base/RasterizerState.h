@@ -17,6 +17,8 @@ namespace ml
 		bool Create(ml::Window& wnd);
 
 		void Bind();
+		
+		inline ID3D11RasterizerState* GetState() { return mRasterizer.Get(); }
 
 	private:
 		ml::Ptr<ID3D11RasterizerState> mRasterizer;

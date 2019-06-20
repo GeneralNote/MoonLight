@@ -21,6 +21,8 @@ namespace ml
 
 		void Bind(ml::UInt32 sampleMask = 0xFFFFFFFF);
 
+		inline ID3D11BlendState* GetBlend() { return mBlend.Get(); }
+
 	private:
 		ml::Ptr<ID3D11BlendState> mBlend;
 		ml::Window* mWnd;

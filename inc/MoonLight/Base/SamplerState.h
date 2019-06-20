@@ -19,6 +19,8 @@ namespace ml
 		void BindPS(ml::UInt32 slot = 0);
 		void BindCS(ml::UInt32 slot = 0);
 
+		inline ID3D11SamplerState* GetSampler() { return mSampler.Get(); }
+
 		D3D11_SAMPLER_DESC Info;
 
 	private:

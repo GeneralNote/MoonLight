@@ -1,32 +1,17 @@
-# MOONLIGHT
+# Moonlight
 Simple Direct3D 11 wrapper.
 ![Animation](https://i.imgur.com/N59IGah.gif)
 
 ## TODO:
-- [x] ml::Timer
-- [x] Viewport
-- [x] StructuredBuffer<T\>, Buffer<T\>
-- [x] UnorderedAccessView + ShaderResourceView (*RW*Texture2D, *RW*StructuredBuffer, *RW*Buffer)
-- [x] ComputeShader
-- [x] ml\::Texture, ml::Image
-- [x] assert(mWnd != nullptr)
-- [x] multiple file formats (support .dds)
+- [ ] OpenGL support + Linux
 - [ ] Texture arrays
-- [x] Map() and Unmap() for ID3D11Resource (implement IResource)
-- [ ] ml::Logger & check for HRESULTs
-- [x] ml::RenderTexture
-- [x] ml::GeometryGenerator -> create spheres, planes, cubes, etc... at run time
-- [x] convert ml\::Resource::CPUAccess parameters to UInt8 so that bitwise operators can be used
-- [x] make Shader class implement LoadFromFile which calls LoadFromMemory
+- [ ] check for HRESULTs
 - [ ] set debug object names in debug mode ( SetPrivateData(WKPDID_D3DDebugObjectName) )
-- [ ] geometry NORMALS should start at offset: 12
 - [ ] create batch classes (ml\::VertexBufferBatch, ml\::ConstantBufferBatch, ml\::ViewportBatch, etc..)
-- [x] shader include handler - handles #include statements in loaded .hlsl files ( ml::ShaderIncludeHandler )
-- [x] shader macro definitions ( ml::ShaderMacro sMacros; sMacros.Add("QUALITY", "1+4"); shader.SetMacros(sMacros); )
 - [ ] vertex buffer input slots ( ml::VertexBufferBatch batch; batch.Add(positionBuffer); batch.Add(normalBuffer); batch.Bind(); )
 - [ ] better and more attractive compute shader example
 - [ ] ml::Renderer -> ml\::WindowRenderer implements ID3D11DeviceContext, ml\::ThreadedRenderer implements ID3D11DefferedContext -> BindVS(myRenderer, slotNumber)
 - [ ] rename ml\::Topology into ml\::PrimitiveType
 - [ ] change style from mName to m_name
 - [ ] universal header: #inclued <MoonLight.hpp>
-- [ ] QOL: IndexBuffer + example, GeometryFactory normals
+- [ ] QOL: IndexBuffer + example

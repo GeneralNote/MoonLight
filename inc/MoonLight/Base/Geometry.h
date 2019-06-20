@@ -20,6 +20,9 @@ namespace ml
 
 		void Draw();
 
+		inline ml::VertexBuffer<Vertex>& GetBuffer() { return mVertBuffer; }
+		inline size_t GetVertexCount() { return mVertCount; }
+
 	private:
 		ml::Window* mWnd;
 		ml::VertexBuffer<Vertex> mVertBuffer;

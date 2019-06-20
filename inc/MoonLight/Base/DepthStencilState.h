@@ -18,6 +18,8 @@ namespace ml
 
 		void Bind(ml::UInt32 stencilRef = 0xFFFFFFFF);
 
+		inline ID3D11DepthStencilState* GetState() { return mState.Get(); }
+
 	private:
 		ml::Ptr<ID3D11DepthStencilState> mState;
 		ml::Window* mWnd;
