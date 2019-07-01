@@ -27,7 +27,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -40,9 +40,9 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -159,8 +159,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Examples\Audio\main.cpp" />
     <ClCompile Include="Examples\Common\Camera.cpp" />
     <ClCompile Include="inc\MoonLight\Base\Topology.cpp" />
+    <ClCompile Include="src\Audio\AudioEngine.cpp" />
+    <ClCompile Include="src\Audio\AudioFile.cpp" />
+    <ClCompile Include="src\Audio\AudioPlayer.cpp" />
     <ClCompile Include="src\Base\BlendState.cpp" />
     <ClCompile Include="src\Base\Bounds.cpp" />
     <ClCompile Include="src\Base\Color.cpp" />
@@ -195,6 +199,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Examples\Common\Camera.h" />
+    <ClInclude Include="inc\MoonLight\Audio\AudioEngine.h" />
+    <ClInclude Include="inc\MoonLight\Audio\AudioFile.h" />
+    <ClInclude Include="inc\MoonLight\Audio\AudioPlayer.h" />
     <ClInclude Include="inc\MoonLight\Base\BlendState.h" />
     <ClInclude Include="inc\MoonLight\Base\Bounds.h" />
     <ClInclude Include="inc\MoonLight\Base\Buffer.h" />

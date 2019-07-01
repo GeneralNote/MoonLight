@@ -3,7 +3,7 @@ MoonLight is a simple **Direct3D 11 wrapper**. It exists to lower the number of 
 needed to write a Direct3D app. In future I might add OpenGL and Linux support.
 
 <p align="center">
-    <img width="400" src="https://i.imgur.com/N59IGah.gif">
+    <img width="400" src="./Screenshots/screen1.gif">
 </p>
 
 ## Building

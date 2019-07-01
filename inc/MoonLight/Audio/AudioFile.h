@@ -1,0 +1,44 @@
+#pragma once
+#include <vector>
+#include <string>
+#include <atomic>
+#include <thread>
+#include <windows.h>
+#include <mmreg.h>
+
+#include <MoonLight/Audio/AudioEngine.h>
+
+namespace ml
+{
+	class AudioFile
+	{
+	public:
+		AudioFile();
+		~AudioFile();
+
+		void Load(const std::string& file, AudioEngine& engine);
+
+		inline std::vector<BYTE>& GetSamples() { return m_samples; }
+		inline WAVEFORMATEX* GetInfo() { return m_info; }
+		inline bool IsLoading() { return m_loading; }
+		inline bool HasFailed() { return !m_loaded && !m_loading; }
+		inline AudioEngine* GetOwner() { return m_owner; }
+	
+		inline int16_t GetSample(int i) {
+			i *= m_info->nChannels * (m_info->wBitsPerSample / 8);
+			return ((m_samples[i]) | (m_samples[i + 1] << 8));
+		}
+
+	private:
+		void m_load(const std::wstring& file, IMFSourceReader* reader);
+
+		AudioEngine* m_owner;
+		IMFSourceReader* m_reader;
+
+		std::thread* m_loadThread;
+		std::atomic<bool> m_loading;
+		std::atomic<bool> m_loaded;
+		WAVEFORMATEX* m_info;
+		std::vector<BYTE> m_samples;
+	};
+}
