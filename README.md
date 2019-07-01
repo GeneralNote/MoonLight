@@ -2,10 +2,6 @@
 MoonLight is a simple **Direct3D 11 wrapper**. It exists to lower the number of lines
 needed to write a Direct3D app. In future I might add OpenGL and Linux support.
 
-<p align="center">
-    <img width="400" src="./Screenshots/screen1.gif">
-</p>
-
 ## Building
 Before building, you should install DirectXTex via `vcpkg`. If you dont use
 `vcpkg` then you should link DirectXTex manually by compiling the [source](https://github.com/microsoft/directxtex)
