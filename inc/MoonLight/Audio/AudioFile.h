@@ -28,7 +28,7 @@ namespace ml
 			i *= m_info->nChannels * (m_info->wBitsPerSample / 8);
 			return ((m_samples[i]) | (m_samples[i + 1] << 8));
 		}
-		inline void Prepare() { if (!m_loading && m_loadThread && m_loadThread->joinable()) m_loadThread->join(); }
+		inline void Finalize() { if (!m_loading && m_loadThread && m_loadThread->joinable()) m_loadThread->join(); }
 	private:
 		void m_load(const std::wstring& file, IMFSourceReader* reader);
 

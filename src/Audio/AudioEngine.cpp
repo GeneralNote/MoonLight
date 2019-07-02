@@ -16,7 +16,8 @@ namespace ml
 		m_initialized = false;
 
 		// clean up
-		m_master->DestroyVoice();
+		if (m_master)
+			m_master->DestroyVoice();
 		m_engine->StopEngine();
 
 		if (m_readerConf) {

@@ -17,8 +17,7 @@ int main()
 	while (file.IsLoading()) { }
 
 	// must call this after we finish loading an audio file
-	printf("Finishing up!\n");
-	file.Prepare();
+	file.Finalize();
 
 	if (file.HasFailed()) {
 		printf("Failed to load the audio file.\n");

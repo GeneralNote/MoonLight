@@ -24,12 +24,12 @@ namespace ml
 
 	void AudioFile::Load(const std::string& file, AudioEngine& engine)
 	{
+		if (!engine.IsInitialized())
+			return;
+
 		m_loading = true;
 		m_loaded = false;
 		m_owner = nullptr;
-
-		if (!engine.IsInitialized())
-			return;
 
 		m_owner = &engine;
 
