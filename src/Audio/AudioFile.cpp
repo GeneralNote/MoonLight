@@ -11,6 +11,7 @@ namespace ml
 	}
 	AudioFile::~AudioFile() {
 		if (m_loadThread) {
+			m_loadThread->join();
 			delete m_loadThread;
 			m_loadThread = nullptr;
 		}
@@ -23,7 +24,7 @@ namespace ml
 
 	void AudioFile::Load(const std::string& file, AudioEngine& engine)
 	{
-		m_loading = false;
+		m_loading = true;
 		m_loaded = false;
 		m_owner = nullptr;
 
@@ -48,8 +49,13 @@ namespace ml
 			m_loadThread = nullptr;
 		}
 
-		// TODO: m_loadThread = new std::thread(&AudioFile::m_load, this, wfile, m_reader);
-		m_load(wfile, m_reader);
+		// TODO:
+		m_loadThread = new std::thread([&]() {
+			//m_loading = true;
+			this->m_load(wfile, m_reader);
+			//m_loading = false;
+		});
+		//m_load(wfile, m_reader);
 	}
 
 	void AudioFile::m_load(const std::wstring& wfile, IMFSourceReader* reader)
@@ -59,7 +65,6 @@ namespace ml
 
 		HRESULT hr;
 
-		printf("jeff\n");
 		hr = reader->SetStreamSelection((DWORD)MF_SOURCE_READER_ALL_STREAMS, false);
 		if (FAILED(hr)) {
 			m_loading = false;
@@ -212,8 +217,5 @@ namespace ml
 
 		m_loaded = true;
 		m_loading = false;
-
-		printf("%d\n", (int)m_loaded);
-
 	}
 }
