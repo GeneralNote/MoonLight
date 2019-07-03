@@ -14,6 +14,7 @@ namespace ml
 	{
 	public:
 		bool Create(ml::Window& wnd, ml::Image& img, ml::Resource::Flags flags = ml::Resource::ShaderResource);
+		bool Create(ml::Window& wnd, int width, int height, ml::Resource::Flags flags = ml::Resource::ShaderResource, DXGI_FORMAT fmt = DXGI_FORMAT_R8G8B8A8_UNORM);
 	};
 }
 

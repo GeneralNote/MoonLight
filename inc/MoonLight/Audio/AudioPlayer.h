@@ -12,6 +12,7 @@ namespace ml
 		bool Play(AudioFile& file, bool loop = false);
 		void Stop();
 
+		inline bool IsPlaying() { return m_playing; }
 		int SamplesPlayedCount();
 
 	private:

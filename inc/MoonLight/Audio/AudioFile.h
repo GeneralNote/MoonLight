@@ -23,9 +23,12 @@ namespace ml
 		inline bool IsLoading() { return m_loading > 0; }
 		inline bool HasFailed() { return !m_loaded && !m_loading; }
 		inline AudioEngine* GetOwner() { return m_owner; }
+		inline int GetTotalSamplesPerChannel() { return m_samples.size() / m_info->nChannels / (m_info->wBitsPerSample / 8); }
 	
-		inline int16_t GetSample(int i) {
-			i *= m_info->nChannels * (m_info->wBitsPerSample / 8);
+		inline int16_t GetSample(int i, bool skipSecondChannel = true) {
+			i *= (m_info->wBitsPerSample / 8);
+			if (skipSecondChannel)
+				i *= m_info->nChannels;
 			return ((m_samples[i]) | (m_samples[i + 1] << 8));
 		}
 		inline void Finalize() { if (!m_loading && m_loadThread && m_loadThread->joinable()) m_loadThread->join(); }

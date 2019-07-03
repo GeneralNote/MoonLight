@@ -17,4 +17,10 @@ namespace ml
 
 		mWindow->GetDeviceContext()->Unmap(mResource.Get(), m_lastResource);
 	}
+	void IResource::Update(void* data, UINT rowSize)
+	{
+		assert(mWindow != nullptr);
+
+		mWindow->GetDeviceContext()->UpdateSubresource(mResource.Get(), 0, NULL, data, rowSize, 0);
+	}
 }

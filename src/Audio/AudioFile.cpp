@@ -11,7 +11,8 @@ namespace ml
 	}
 	AudioFile::~AudioFile() {
 		if (m_loadThread) {
-			m_loadThread->join();
+			if (m_loadThread->joinable())
+				m_loadThread->join();
 			delete m_loadThread;
 			m_loadThread = nullptr;
 		}

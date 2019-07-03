@@ -25,6 +25,7 @@ namespace ml
 		inline void Release() { mResource.Reset(); }
 		bool Map(MapData& data, MapType mapMode, ml::UInt32 resource = 0, bool doNotWait = false);
 		void Unmap();
+		void Update(void* data, UINT rowSize);
 
 	protected:
 		inline void SetOwner(ml::Window& wnd) { mWindow = &wnd; }
