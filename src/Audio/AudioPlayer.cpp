@@ -8,7 +8,10 @@ namespace ml
 	}
 	AudioPlayer::~AudioPlayer()
 	{
-
+		if (m_voice) {
+			m_voice->DestroyVoice();
+			m_voice = nullptr;
+		}
 	}
 
 	bool AudioPlayer::Play(AudioFile& file, bool loop)

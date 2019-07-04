@@ -12,6 +12,9 @@ namespace ml
 		bool Play(AudioFile& file, bool loop = false);
 		void Stop();
 
+		inline void SetVolume(float vol) { if (m_voice) m_voice->SetVolume(vol); }
+		inline float GetVolume() { float ret; m_voice->GetVolume(&ret); return ret; }
+
 		inline bool IsPlaying() { return m_playing; }
 		int SamplesPlayedCount();
 
