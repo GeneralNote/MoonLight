@@ -1,4 +1,4 @@
-# Moonlight
+# Moonlight [DEPRECATED]
 MoonLight is a simple **Direct3D 11 wrapper**. It exists to lower the number of lines
 needed to write a Direct3D app. In future I might add OpenGL and Linux support.
 
